@@ -6,7 +6,7 @@ config = getgenv().Configs or {}
 
 print("ez")
 
-print("loe")
+print("loel")
 
 
 
@@ -304,7 +304,7 @@ spawn(function()
 
 			pcall(function()
 
-				for i,v in pairs(_G.Weapon) do
+				for i,v in pairs(vd) do
 
 				print(i,v)
 
