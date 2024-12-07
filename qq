@@ -1,27 +1,3 @@
-getgenv().Configs = {
-	["Distance Farm"] = "30", -- number
-	["Select Method"] = "Behind", -- Behind Below Upper
-	["Select Weapon"] = {"Melee", "Sword", "DevilFruit", "Special"}, -- Melee Sword DevilFruit Special
-	["Select Accessory"] = "WhySoSerious",
-	["Auto Skill All"] = false,
-
-	-- event
-	["Auto Farm Speed Grandma [Fully]"] = false,
-	["Auto Farm Event"] = false,
-
-	-- main
-	["Automatic Dungeon"] = false,
-	["Auto Farm P'Nuang"] = false,
-
-	-- store
-	["Select Ignore Item"] = {"Orb Broken", "Finger Sukuna", "Orb Atomic"},
-	["Auto Store"] = false,
-	["Auto Store All"] = false,
-
-	-- misc
-	["Anti AFK"] = true,
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Namoqp1/dump/refs/heads/main/uu"))()
 
 config = getgenv().Configs or {}
 
