@@ -1,29 +1,3 @@
-getgenv().Configs = {
-	["Distance Farm"] = "30", -- number
-	["Select Method"] = "Behind", -- Behind Below Upper
-	["Select Weapon"] = {"Melee", "Sword", "DevilFruit", "Special"}, -- Melee Sword DevilFruit Special
-	["Select Accessory"] = "WhySoSerious",
-	["Automatic Equip"] = true,
-	["Auto Skill All"] = false,
-
-	-- event
-	["Auto Farm Speed Grandma [Fully]"] = false,
-	["Auto Farm Event"] = false,
-
-	-- main
-	["Automatic Dungeon"] = true,
-	["Auto Farm P'Nuang"] = true,
-
-	-- store
-	["Select Ignore Item"] = {"Orb Broken", "Finger Sukuna", "Orb Atomic"},
-	["Auto Store"] = true,
-	["Auto Store All"] = true,
-
-	-- misc
-	["Anti AFK"] = true,
-}
-
-
 
 config = getgenv().Configs or {}
 
