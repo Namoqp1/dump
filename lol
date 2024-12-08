@@ -36,7 +36,7 @@ spawn(function()
 							count = count + 1
 						end
 					end
-				until count == 5
+				until count >= 5
 			elseif count > 0 then
 				for i,v in pairs(CF) do
 					if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Watering vegetables") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Watering vegetables") then
