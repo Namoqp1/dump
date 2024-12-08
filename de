@@ -1,0 +1,108 @@
+local count = 0
+
+
+local CF = {
+	CFrame.new(-898.44140625, 25.210580825805664, 3033.38427734375),
+	CFrame.new(-892.5354614257812, 25.610580444335938, 3008.369873046875),
+	CFrame.new(-882.0440673828125, 25.210580825805664, 2983.48388671875),
+	CFrame.new(-875.1864624023438, 25.210580825805664, 2960.007080078125),
+	CFrame.new(-868.6435546875, 25.210580825805664, 2936.291748046875),
+	CFrame.new(-840.460693359375, 25.091772079467773, 2919.197021484375),
+	CFrame.new(-845.8807373046875, 25.091772079467773, 2941.836181640625),
+	CFrame.new(-852.7385864257812, 25.091772079467773, 2965.153564453125),
+	CFrame.new(-861.6492309570312, 25.091772079467773, 2987.676025390625),
+	CFrame.new(-868.8522338867188, 25.091772079467773, 3013.59423828125),
+	CFrame.new(-877.7238159179688, 25.091772079467773, 3040.390869140625),
+	CFrame.new(-857.6080322265625, 25.091772079467773, 3046.6884765625),
+	CFrame.new(-849.0603637695312, 25.091772079467773, 3022.952392578125),
+	CFrame.new(-840.3482055664062, 24.247865676879883, 2998.813720703125),
+	CFrame.new(-833.74560546875, 25.091772079467773, 2974.5087890625),
+	CFrame.new(-826.5520629882812, 25.091772079467773, 2949.965576171875),
+	CFrame.new(-818.8967895507812, 25.091772079467773, 2927.21630859375),
+	CFrame.new(-799.9794311523438, 25.091772079467773, 2931.618408203125),
+	CFrame.new(-807.1898193359375, 25.091772079467773, 2954.24072265625),
+	CFrame.new(-814.8495483398438, 25.091772079467773, 2978.302978515625),
+	CFrame.new(-822.2654418945312, 25.091772079467773, 3001.75390625),
+	CFrame.new(-828.7405395507812, 25.091772079467773, 3025.784423828125),
+	CFrame.new(-836.478759765625, 25.091772079467773, 3051.261962890625),
+	CFrame.new(-816.4376831054688, 25.091772079467773, 3057.70654296875),
+	CFrame.new(-807.6306762695312, 24.922990798950195, 3033.133544921875),
+	CFrame.new(-800.8670043945312, 25.091772079467773, 3010.0390625),
+	CFrame.new(-794.464111328125, 25.091772079467773, 2985.78369140625),
+	CFrame.new(-786.3164672851562, 25.09177017211914, 2961.560791015625),
+	CFrame.new(-778.7188110351562, 25.09177017211914, 2938.975341796875),
+	CFrame.new(-758.0132446289062, 25.091772079467773, 2943.29638671875),
+	CFrame.new(-765.5614624023438, 25.091772079467773, 2966.873291015625),
+	CFrame.new(-771.3308715820312, 25.091772079467773, 2991.83349609375),
+	CFrame.new(-779.394775390625, 25.091772079467773, 3017.6083984375),
+	CFrame.new(-786.4102172851562, 25.091772079467773, 3040.031982421875),
+	CFrame.new(-793.9926147460938, 25.091772079467773, 3064.28271484375)
+}
+
+spawn(function()
+	while task.wait() do
+		if _G.Vegetables then
+			pcall(function()
+				count = 0 
+				for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.Name == "Seeds Bag" then
+						count = count + 1
+					end
+				end
+
+
+				if count == 0 then
+					repeat
+						task.wait()
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1116.566162109375, 23.651195526123047, 2996.72265625)
+						fireproximityprompt(workspace.npcClick["10 Diamond For Seeds Bag"].HumanoidRootPart.Prompt)
+						count = 0
+						for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+							if v.Name == "Seeds Bag" then
+								count = count + 1
+							end
+						end
+					until count >= 5 or not _G.Vegetables
+				elseif count > 0 then
+					if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Watering vegetables") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Watering vegetables") then
+						for i, v in ipairs(CF) do
+							local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+							wait(.5)
+							character:SetPrimaryPartCFrame(v)
+							wait(.5)
+							for _, farmModel in ipairs(workspace.Interactable.Farm:GetChildren()) do
+								if farmModel:IsA("Model") and farmModel:FindFirstChild("Handle") then
+									local prompt = farmModel.Handle:FindFirstChild("ProximityPrompt")
+									if prompt and prompt.Enabled then
+										local distance = (character.HumanoidRootPart.Position - farmModel.Handle.Position).Magnitude
+										if distance <= prompt.MaxActivationDistance then
+											fireproximityprompt(prompt)
+											wait(.3)
+											break
+										end
+									end
+								end
+							end
+						end
+					else
+						repeat task.wait()
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-924.9575805664062, 23.651203155517578, 3025.1083984375)
+							fireproximityprompt(workspace.npcClick["Get Watering vegetables"].HumanoidRootPart.Prompt)
+							task.wait(0.5)
+						until game:GetService("Players").LocalPlayer.Character:FindFirstChild("Watering vegetables") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Watering vegetables")
+					end
+				end
+			end)
+		end
+	end
+end)
+
+
+
+spawn(function()
+	while task.wait(1) do
+		if _G.Vegetables then
+			game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Watering vegetables").Parent = game.Players.LocalPlayer.Character
+		end
+	end
+end)
