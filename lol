@@ -52,11 +52,9 @@ spawn(function()
 						game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-932.2442016601562, 24.223411560058594, 3022.3515625)
 						game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
-						return
 					end
 				end
 			end
 		end
 	end
 end)
-
