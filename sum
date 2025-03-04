@@ -1,0 +1,200 @@
+local Shiro = loadstring(game:HttpGet("https://raw.githubusercontent.com/discoart/FluentPlus/refs/heads/main/Beta.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+
+local Window = Shiro:CreateWindow({
+	Title = "e",
+	SubTitle = "",
+	TabWidth = 130,
+	Size = UDim2.fromOffset(600, 400),
+	Acrylic = false, 
+	Theme = "Darker",
+	MinimizeKey = Enum.KeyCode.RightControl
+})
+
+local Tabs = {
+	Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+
+local function Stand()
+	local textLabel = game:GetService("Players").LocalPlayer.PlayerGui.newStatsGUI.StatsMenu.StandName._Background.TextLabel
+	textLabel = string.gsub(textLabel.Text, "Stand: ", "")
+	return textLabel
+end
+
+
+local StandList = {
+	"Aerosmith",
+	"Cream",
+	"Crazy Diamond",
+	"Dio's The World",
+	"Diver Down",
+	"Dirty Deeds Done Dirt Cheap",
+	"Gold Experience",
+	"Hierophant Green",
+	"Jotaro's Star Platinum",
+	"King Crimson",
+	"Killer Queen",
+	"Magician Red",
+	"Purple Haze",
+	"Putrid Whine",
+	"Silver Chariot",
+	"Star Platinum",
+	"Star Platinum OVA",
+	"Star Platinum: Stone Ocean",
+	"Stone Free",
+	"Sticky Finger",
+	"The Emperor",
+	"The Hand",
+	"The World",
+	"The World Alternate Universe",
+	"The World OVA",
+	"Tusk Act 1",
+	"Whitesnake"
+}
+
+local AttributeList = {
+	"None",
+	"Strong",
+	"Powerful",
+	"Manic",
+	"Tough",
+	"Enrage",
+	"Sloppy",
+	"Lethargic",
+	"Godly",
+	"Daemon",
+	"Glass Cannon",
+	"Hacker",
+	"Invincible",
+	"Tragic",
+	"Diabolical",
+	"Legendary"
+}
+
+
+local SelectStand = Tabs.Main:AddDropdown("Select Stand", {
+	Title = "Select Stand",
+	Description = "Select Stand You need",
+	Values = StandList,
+	Multi = true,
+	Default = _G.SelectedStands or {},
+	Callback = function(selected)
+		_G.SelectedStands = selected
+	end
+})
+
+local SelectAttribute = Tabs.Main:AddDropdown("Select Attribute", {
+	Title = "Select Attribute",
+	Description = "Select Attribute you need",
+	Values = AttributeList,
+	Multi = true,
+	Default = _G.SelectedAttributes or {},
+	Callback = function(selected)
+		_G.SelectedAttributes = selected
+	end
+})
+
+
+
+local ModeList = {
+	"Stand Only",
+	"Attribute Only",
+	"Stand or Attribute",
+	"Stand and Attribute"
+}
+
+local SelectMode = Tabs.Main:AddDropdown("SelectMode", {
+	Title = "Stand Farming Mode",
+	Values = ModeList,
+	Multi = false,
+	Default = _G.SFMode,
+	Callback = function(selectedMode)
+		_G.SFMode = selectedMode
+	end
+})
+
+
+
+
+Tabs.Main:AddToggle("Auto Farm Stand", {
+	Title = "Auto Farm Stand",
+	Default = _G.Farm,
+	Callback = function(bool)
+		_G.Farm = bool
+		task.spawn(function()
+			while _G.Farm and task.wait() do
+				xpcall(function()
+					if _G.SFMode == "Stand Only" then
+						if not _G.SelectedStands[Stand()] then
+							if Stand() == "" then
+								if game.Players.LocalPlayer.Character:FindFirstChild("Charged Arrow") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Charged Arrow"))
+								end
+							else
+								if game.Players.LocalPlayer.Character:FindFirstChild("Rokakaka") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+								end
+							end
+						end
+					elseif _G.SFMode == "Attribute Only" then
+						if not _G.SelectedAttributes[game:GetService("Players").LocalPlayer.Data.Attri.Value] then
+							if Stand() == "" then
+								if game.Players.LocalPlayer.Character:FindFirstChild("Charged Arrow") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Charged Arrow"))
+								end
+							else
+								if game.Players.LocalPlayer.Character:FindFirstChild("Rokakaka") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+								end
+							end
+						end
+					elseif _G.SFMode == "Stand or Attribute" then
+						if not _G.SelectedStands[Stand()] and not _G.SelectedAttributes[game:GetService("Players").LocalPlayer.Data.Attri.Value] then
+							if Stand() == "" then
+								if game.Players.LocalPlayer.Character:FindFirstChild("Charged Arrow") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Charged Arrow"))
+								end
+							else
+								if game.Players.LocalPlayer.Character:FindFirstChild("Rokakaka") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+								end
+							end
+						end
+					elseif _G.SFMode == "Stand and Attribute" then
+						if not _G.SelectedStands[Stand()] or not _G.SelectedAttributes[game:GetService("Players").LocalPlayer.Data.Attri.Value] then
+							if Stand() == "" then
+								if game.Players.LocalPlayer.Character:FindFirstChild("Charged Arrow") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Charged Arrow"))
+								end
+							else
+								if game.Players.LocalPlayer.Character:FindFirstChild("Rokakaka") then
+									game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("UseItem"):FireServer()
+								else
+									game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+								end
+							end
+						end
+					end
+				end,print)
+			end
+		end)
+	end
+})
