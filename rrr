@@ -1,0 +1,6505 @@
+local zplace = tostring(game.PlaceId)
+
+if zplace == "15049111150" then
+	SPMain = true
+elseif zplace == "16644455867" then
+	SPPortal = true
+elseif zplace == "11448431235" then
+	RFMain = true
+elseif zplace == "12241341621" then
+	RFMain2 = true
+elseif zplace == "16723079713" then
+	RFDungeon = true
+elseif zplace == "14206387098" or zplace == "14379170249" or zplace == "14390362970" then
+	CAMain = true
+elseif zplace == "8540168650" then
+	SUMain = true
+elseif zplace == "10704789056" then
+	DwMain = true
+end
+
+--SPMain
+
+if SPMain then
+
+
+	local startTime = os.time()
+
+	print('Game Loading: Second Piece - Main Game') 
+
+	repeat 
+		task.wait() 
+	until game:IsLoaded()
+
+	local endTime = os.time()
+	local elapsedTime = endTime - startTime
+
+	print('Game Loaded: ' .. elapsedTime .. ' seconds')
+	print('Game Finished Loading')
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	local Window = Fluent:CreateWindow({
+		Title = "Second Piece Premium Script",
+		SubTitle = "by ZA HUB",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(500, 370),
+		Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+	})
+
+	--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+		Bossz = Window:AddTab({ Title = "Boss", Icon = "swords" }),
+		Event = Window:AddTab({ Title = "Event", Icon = "backpack" }),
+		Skills = Window:AddTab({ Title = "Skills", Icon = "flame" }),
+		Stats1 = Window:AddTab({ Title = "Stats", Icon = "bar-chart-2" }),
+		Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
+		Island = Window:AddTab({ Title = "Island", Icon = "palmtree" }),
+		Shop = Window:AddTab({ Title = "Shop", Icon = "shopping-cart" }),
+		Fruit = Window:AddTab({ Title = "Devil Fruit", Icon = "cherry" }),
+		Portals = Window:AddTab({ Title = "Portal", Icon = "fingerprint" }),
+		Misc = Window:AddTab({ Title = "Misc", Icon = "boxes" }),
+		Settings = Window:AddTab({
+			Title = "Config", Icon = "settings"
+		})
+	}
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+
+	local Options = Fluent.Options
+
+	do
+
+		Tabs.Main:AddParagraph({
+
+			Title = "Main",
+
+			Content = ""
+		})
+
+		function CheckLV()
+			if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("QuestUI") then
+				local MyLv = tonumber(game.Players.LocalPlayer.PlayerGui.MainUI.Interface.PlayerStatus.Frame.Level.TextLabel.Text:match('%d+'))
+				if MyLv == 1 or MyLv <= 249 then
+					Mon = "Bandit"
+					CFQ = CFrame.new(-953.566528, 34.5999947, -552.164612, -0.0109250434, -3.3378329e-09, -0.999940336, 1.94075778e-09, 1, -3.35923622e-09, 0.999940336, -1.97734162e-09, -0.0109250434)
+				elseif MyLv == 250 or MyLv <= 999 then
+					Mon = "Clown Pirate"
+					CFQ = CFrame.new(-71.5784531, 36.4347496, 50.7921715, 0.00707866857, 2.668971e-08, 0.999974966, -5.85915032e-08, 1, -2.62756199e-08, -0.999974966, -5.84040372e-08, 0.00707866857)
+				elseif MyLv == 1000 or MyLv <= 2349 then
+					Mon = "Marine"
+					CFQ = CFrame.new(991.011414, 76.895134, 1324.57812, -0.998725414, -6.23391339e-09, -0.0504727885, -1.01550848e-08, 1, 7.74323752e-08, 0.0504727885, 7.78462379e-08, -0.998725414)
+				elseif MyLv == 2350 or MyLv <= 5249 then
+					Mon = "Monkey"
+					CFQ = CFrame.new(770.010071, 38.3316078, -1225.74194, 0.0635694042, 1.09396325e-07, 0.997977436, 5.08351974e-08, 1, -1.12856149e-07, -0.997977436, 5.79065755e-08, 0.0635694042)
+				elseif MyLv >= 5250 then
+					Mon = "Snow Bandit"
+					CFQ = CFrame.new(1823.45251, 42.9730377, -217.761673, 0.0171297863, -7.80924125e-08, -0.999853253, 2.29865922e-08, 1, -7.77100624e-08, 0.999853253, -2.16520633e-08, 0.0171297863)
+				end
+			end
+		end
+
+
+		function MonA()
+			if free == "Bandit" then
+				MONName = "Bandit [LV.5]"
+			elseif free == "Bandit Leader" then
+				MONName = "Bandit Leader [LV.15]"
+			elseif free == "Clown Pirate" then
+				MONName = "Clown Pirate [LV.250]"
+			elseif free == "Marine" then
+				MONName = "Marine [LV.1250]"
+			elseif free == "Monkey" then
+				MONName = "Monkey [LV.2500]"
+			elseif free == "Monkey King" then
+				MONName = "Monkey King [LV.3750]"
+			elseif free == "Snow Bandit" then
+				MONName = "Snow Bandit [LV.5750]"
+			elseif free == "Snow Bandit Leader" then
+				MONName = "Snow Bandit Leader [LV.6250]"
+			end
+		end
+
+		function QuestA()
+			if free == "Bandit" then
+				CFrameQuest = CFrame.new(-953.566528, 34.5999947, -552.164612, -0.0109250434, -3.3378329e-09, -0.999940336, 1.94075778e-09, 1, -3.35923622e-09, 0.999940336, -1.97734162e-09, -0.0109250434)
+			elseif free == "Bandit Leader" then
+				CFrameQuest = CFrame.new(-1097.55042, 34.6000023, -492.550354, -0.0683717504, 2.67226739e-08, 0.997659922, 5.38579563e-08, 1, -2.30943531e-08, -0.997659922, 5.21529238e-08, -0.0683717504)
+			elseif free == "Clown Pirate" then
+				CFrameQuest = CFrame.new(-71.5784531, 36.4347496, 50.7921715, 0.00707866857, 2.668971e-08, 0.999974966, -5.85915032e-08, 1, -2.62756199e-08, -0.999974966, -5.84040372e-08, 0.00707866857)
+			elseif free == "Marine" then
+				CFrameQuest = CFrame.new(991.011414, 76.895134, 1324.57812, -0.998725414, -6.23391339e-09, -0.0504727885, -1.01550848e-08, 1, 7.74323752e-08, 0.0504727885, 7.78462379e-08, -0.998725414)
+			elseif free == "Monkey" then
+				CFrameQuest = CFrame.new(770.010071, 38.3316078, -1225.74194, 0.0635694042, 1.09396325e-07, 0.997977436, 5.08351974e-08, 1, -1.12856149e-07, -0.997977436, 5.79065755e-08, 0.0635694042)
+			elseif free == "Monkey King" then
+				CFrameQuest = CFrame.new(840.182739, 38.3316078, -1344.4126, 0.999995708, -2.00637906e-08, 0.00293630478, 2.01265724e-08, 1, -2.1352017e-08, -0.00293630478, 2.14110223e-08, 0.999995708)
+			elseif free == "Snow Bandit" then
+				CFrameQuest = CFrame.new(1823.45251, 42.9730377, -217.761673, 0.0171297863, -7.80924125e-08, -0.999853253, 2.29865922e-08, 1, -7.77100624e-08, 0.999853253, -2.16520633e-08, 0.0171297863)
+			elseif free == "Snow Bandit Leader" then
+				CFrameQuest = nil
+			end
+		end
+
+		loadSettings()
+
+		local Togglefarm = Tabs.Main:AddToggle("Togglefarm", {Title = "Auto Farm", Default = _G.AutoFarmlv })
+		Togglefarm:OnChanged(function(lllkkkzzzzzzhh)
+			_G.AutoFarmlv = lllkkkzzzzzzhh
+			saveSettings()
+		end)
+
+
+		spawn(function()
+			while true do
+				if _G.AutoFarmlv then
+					pcall(function()
+						if game.Players.LocalPlayer.PlayerGui:FindFirstChild("QuestUI") then
+							CheckLV()
+							No()
+							for _,v in pairs(game:GetService("Workspace").Lives:GetChildren()) do
+								if v.Name == Mon and v.Humanoid.Health > 0 then
+									v.HumanoidRootPart.Size = Vector3.new(10,10,10)
+									v.HumanoidRootPart.Transparency = 0.9
+									v.Humanoid.WalkSpeed = 0
+									v.Humanoid.JumpPower = 0
+									repeat task.wait()
+										TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+									until _G.AutoFarmlv == false or v.Humanoid.Health <= 0
+								end
+							end
+						end
+					end)
+				end
+				wait(0.1) -- Adjust the wait time to reduce lag
+			end
+		end)
+
+		spawn(function()
+			while true do
+				if _G.AutoFarmlv then
+					pcall(function()
+						CheckLV()
+						if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("QuestUI") then
+							repeat task.wait()
+								TP(CFQ)
+							until not _G.AutoFarmlv or game.Players.LocalPlayer.PlayerGui:FindFirstChild("QuestUI")
+						end
+					end)
+				end
+				wait(0.5) -- Adjust the wait time to reduce lag
+			end
+		end)
+
+		spawn(function()
+			while true do
+				if _G.AutoFarmlv then
+					pcall(function()
+						for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+							if v.Name == "ProximityPrompt" then
+								fireproximityprompt(v,30)
+							end
+						end
+					end)
+				end
+				wait(0.5) -- Adjust the wait time to reduce lag
+			end
+		end)
+
+
+		function TP(CFgo)
+			if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
+			local tween_s = game:service"TweenService"
+			local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/400, Enum.EasingStyle.Linear)
+			tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = CFgo})
+			tween:Play()
+
+			local tweenfunc = {}
+
+			function tweenfunc:Stop()
+				tween:Cancel()
+			end
+
+			return tweenfunc
+		end
+
+
+		function TPP(CFgo)
+			if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
+			local tween_s = game:service"TweenService"
+			local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/1000, Enum.EasingStyle.Linear)
+			tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = CFgo})
+			tween:Play()
+
+			local tweenfunc = {}
+
+			function tweenfunc:Stop()
+				tween:Cancel()
+			end
+
+			return tweenfunc
+		end
+
+
+		spawn(function()
+			pcall(function()
+				game:GetService("RunService").Stepped:Connect(function()
+					if _G.AutoFarmlv or _G.AutoBoss or _G.AutoGem or _G.AutoBossspawn or _G.AutoBountyQuest or _G.portalSpawned or AutoJoinPortal then
+						if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							local Noclip = Instance.new("BodyVelocity")
+							Noclip.Name = "BodyClip"
+							Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+							Noclip.MaxForce = Vector3.new(100000,100000,100000)
+							Noclip.Velocity = Vector3.new(0,0,0)
+						end
+					else    
+						if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+						end
+					end
+				end)
+			end)
+		end)
+
+
+
+		local Weaponlist = {}
+
+		local SelectWeapon = Tabs.Main:AddDropdown("SelectWeapon", {
+			Title = "Select Weapon",
+			Values = Weaponlist,
+			Multi = false,
+			Default = _G.Weapon,
+			Callback = function(selectedWeapon)
+				_G.Weapon = selectedWeapon
+				saveSettings()
+			end
+		})
+
+		local function RefreshWeaponList()
+			Weaponlist = {}
+			for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+				table.insert(Weaponlist, v.Name)
+			end
+			SelectWeapon:SetValues(Weaponlist)
+		end
+
+		Tabs.Main:AddButton({
+			Title = "Refresh Weapon",
+			Description = "",
+			Callback = RefreshWeaponList
+		})
+
+		RefreshWeaponList()
+
+
+
+
+
+		function No()
+			for i, v in ipairs(workspace.Lives:GetChildren()) do
+				if not game:GetService("Players"):GetPlayerFromCharacter(v) then -- if not player then
+					local cleanedName = string.gsub(v.Name, "%d+$", "")
+					v.Name = tostring(cleanedName)
+				end
+			end
+
+			workspace.Lives.ChildAdded:Connect(function(model)
+				task.wait()
+				if not game:GetService("Players"):GetPlayerFromCharacter(model) then -- if not player then
+					local cleanedName = string.gsub(model.Name, "%d+$", "")
+					model.Name = cleanedName
+				end
+			end)
+		end
+
+
+		-- Auto Equip
+		local toggleAutoEquip = Tabs.Main:AddToggle("toggleAutoEquip", {Title = "Auto Equip", Default = _G.AutoEquipped })
+		toggleAutoEquip:OnChanged(function(isEnabled)
+			_G.AutoEquipped = isEnabled
+			saveSettings()
+		end)
+
+
+
+		spawn(function()
+			while true do
+				if _G.AutoEquipped and _G.AutoFarmlv or _G.AutoBoss or _G.AutoGem or _G.AutoBossspawn or _G.AutoBountyQuest then
+					pcall(function()
+						local tool = game.Players.LocalPlayer.Backpack:FindFirstChild(_G.Weapon)
+						if tool then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+						end
+					end)
+				end
+				wait(0.2)
+			end
+		end)
+
+
+		-- Auto Attack
+		local toggleAutoAttack = Tabs.Main:AddToggle("toggleAutoAttack", {Title = "Auto Attack", Default = _G.AutoAttackToggle })
+		toggleAutoAttack:OnChanged(function(autoattack)
+			_G.Attacking = autoattack
+			_G.AutoAttackToggle = autoattack 
+			saveSettings()
+		end)
+
+
+		spawn(function()
+			while true do
+				if _G.AutoAttackToggle and game.Players.LocalPlayer["Character"] then
+					if _G.Attacking and _G.AutoFarmlv or _G.AutoBoss or _G.AutoGem or _G.AutoBossspawn or _G.AutoBountyQuest then
+						game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+						wait(0.3)
+					end
+				end
+				wait(0.1)
+			end
+		end)
+
+		game.Players.LocalPlayer.CharacterAdded:Connect(function()
+			_G.Attacking = false -- Stop auto attack when player respawns
+		end)
+
+		game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+			_G.Attacking = false -- Stop auto attack when player dies
+		end)
+
+		spawn(function()
+			while true do
+				if game.Players.LocalPlayer.Character then
+					local humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+					if humanoid and humanoid.Health <= 0 then
+						Attacking = false -- Stop auto attack when player dies
+					elseif humanoid and humanoid.Health > 0 then
+						wait(1.5) -- Wait 2 seconds after respawn
+						_G.Attacking = true -- Start auto attack again
+					end
+				end
+				wait(0.1)
+			end
+		end)
+
+
+		-- Respawn Handler
+		game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+			if _G.Attacking then
+				-- Re-enable auto attack if it was enabled before respawn
+				toggleAutoAttack(true)
+			end
+		end)
+
+		local ToggleHaki = Tabs.Main:AddToggle("ToggleHaki", {Title = "Auto Haki", Default = _G.hee })
+		ToggleHaki:OnChanged(function(tttttyyy)
+			_G.hee = tttttyyy
+			saveSettings()
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				pcall(function()
+					if _G.hee then
+						_G.ThisPlr = game.Players.LocalPlayer.Name
+						if workspace.Lives[_G.ThisPlr]["Left Arm"]:FindFirstChild("Haki") then
+							-- do nothing
+						else
+							local args = {
+								[1] = "BusoHaki"
+							}
+
+							game:GetService("ReplicatedStorage").Remotes.SkillHolder:FireServer(unpack(args))
+						end
+					end
+				end)
+			end
+		end)
+
+		local ToggleItem = Tabs.Main:AddToggle("ToggleItem", {Title = "Auto TP Item", Default = _G.F })
+		ToggleItem:OnChanged(function(v)
+			_G.F = aaafhbbkwa
+			saveSettings()
+		end)
+
+		spawn(function()
+			while _G.F do wait()
+
+				for i,v in pairs(game:GetService("Workspace").ItemDrop:GetDescendants()) do
+					if v.Name == "TouchInterest" then
+						game.Players.LocalPlayer.Character.HumanoidRootPart .CFrame = v.Parent.CFrame
+						wait()
+					end
+				end
+			end
+		end)
+
+
+		local ToggleFd = Tabs.Main:AddToggle("ToggleFd", {Title = "Auto Chests", Default = _G.Fd })
+		ToggleFd:OnChanged(function(statec)
+			_G.Fd = statec 
+			saveSettings()
+		end)
+
+		spawn(function()
+			while true do 
+				wait()
+				if _G.Fd then
+					game:GetService("RunService").Heartbeat:Connect(function()
+						for _, chest in ipairs(game:GetService("Workspace").Chests:GetDescendants()) do
+							if chest.ClassName == "ProximityPrompt" then
+								fireproximityprompt(chest, 30)
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chest.Parent.CFrame
+							end
+						end
+					end)
+				end 
+			end
+		end)
+
+		local function PressKey(key)
+			game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode[key], false, game)
+		end
+
+		local function CheckAutoSkills()
+			while _G.AutoSkill do
+				wait(0.1)
+				if _G.AutoFarmlv or _G.AutoBoss or _G.AutoGem or _G.AutoBossspawn or _G.AutoBountyQuest then
+					if _G.AutoZ then
+						PressKey("Z")
+					end
+					if _G.AutoX then
+						PressKey("X")
+					end
+					if _G.AutoC then
+						PressKey("C")
+					end
+					if _G.AutoV then
+						PressKey("V")
+						if _G.AutoF then
+							PressKey("F")
+						end
+					end
+				end
+			end
+		end
+
+		local function AutoSkillCheck()
+			spawn(function()
+				while true do
+					wait()
+					if _G.AutoSkill then
+						CheckAutoSkills()
+					end
+				end
+			end)
+		end
+
+		AutoSkillCheck()
+
+		local AutoSkill = Tabs.Main:AddToggle("AutoSkill", {Title = "Auto Use Skills", Default = _G.AutoSkill })
+		AutoSkill:OnChanged(function(autoskill)
+			_G.AutoSkill = autoskill 
+			saveSettings()
+			AutoSkillCheck() -- Call the function whenever AutoSkill changes
+		end)
+
+		local Z = Tabs.Skills:AddToggle("Z", {Title = "Auto Z", Default = _G.AutoZ })
+		Z:OnChanged(function(autoz)
+			_G.AutoZ = autoz 
+		end)
+
+		local X = Tabs.Skills:AddToggle("X", {Title = "Auto X", Default = _G.AutoX })
+		X:OnChanged(function(autox)
+			_G.AutoX = autox 
+		end)
+
+		local C = Tabs.Skills:AddToggle("C", {Title = "Auto C", Default = _G.AutoC })
+		C:OnChanged(function(autoc)
+			_G.AutoC = autoc 
+		end)
+
+		local V = Tabs.Skills:AddToggle("V", {Title = "Auto V", Default = _G.AutoV })
+		V:OnChanged(function(autov)
+			_G.AutoV = autov 
+		end)
+
+		local F = Tabs.Skills:AddToggle("F", {Title = "Auto F", Default = _G.AutoF })
+		F:OnChanged(function(autof)
+			_G.AutoF = autof 
+		end)
+
+
+
+		Tabs.Bossz:AddParagraph({
+
+			Title = "Boss",
+
+			Content = "Artoria Sukuna Gojo Kashimo Natsu Tatsumaki"
+		})
+
+		local ToggleBossz = Tabs.Bossz:AddToggle("ToggleBossz", {Title = "Auto Boss", Default = _G.AutoBoss })
+		ToggleBossz:OnChanged(function(lllkkkzzzzzzhh)
+			_G.AutoBoss = lllkkkzzzzzzhh
+			saveSettings()
+		end)
+
+
+		local Mon = {
+			"Artoria [LV.3750]",
+			"Sukuna [LV.2500]",
+			"Gojo [LV.2500]",
+			"Kashimo [LV.3250]",
+			"Natsu [LV.3500]",
+			"Tatsumaki [LV.6250]",
+			"Cid [LV.8500]"
+		}
+
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if _G.AutoBoss then
+						for _, v in pairs(game:GetService("Workspace").Lives:GetChildren()) do
+							for _, name in ipairs(Mon) do
+								if v.Humanoid.DisplayName == name then
+									if v.Humanoid.Health > 0 then
+										repeat task.wait()
+											TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+										until _G.AutoBoss == false or v.Humanoid.Health <= 0
+									end
+								end
+							end
+						end
+					end
+				end)
+			end
+		end)
+
+
+
+
+		local Gem = {
+			"Shank [LV.2500]",
+			"Sand Man [LV.2000]",
+			"Bomb Man [LV.1500]",
+			"Snow Bandit Leader [LV.6250]",
+			"Bandit Leader [LV.15]",
+			"Monkey King [LV.3750]"
+		}
+
+
+		local ToggleGem = Tabs.Bossz:AddToggle("ToggleGem", {Title = "Auto Gem", Default = _G.AutoGem })
+		ToggleGem:OnChanged(function(wyzzz)
+			_G.AutoGem = wyzzz
+			saveSettings()
+		end)
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if _G.AutoGem then
+						for _, v in pairs(game:GetService("Workspace").Lives:GetChildren()) do
+							for _, name in ipairs(Gem) do
+								if v.Humanoid.DisplayName == name then
+									if v.Humanoid.Health > 0 then
+										repeat task.wait()
+											TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+										until _G.AutoGem == false or v.Humanoid.Health <= 0
+									end
+								end
+							end
+						end
+					end
+				end)
+			end
+		end)
+
+		------------------ เน€เธเธกเธเธฒเธ
+
+		local function randomTeleport()
+			local range = 125000
+			local newX = math.random(-range, range)
+			local newY = math.random(1, range)
+			local newZ = math.random(-range, range)
+			local newPosition = Vector3.new(newX, newY, newZ)
+			game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(newPosition))
+		end
+
+		game.Players.LocalPlayer.CharacterAdded:Connect(function()
+			randomTeleport()
+		end)
+
+		local ToggleBountyTask = Tabs.Event:AddToggle("ToggleBountyTask", {Title = "Auto Bounty Task [Risky]", Default = _G.AutoBountyQuest })
+		ToggleBountyTask:OnChanged(function(tgbtq)
+			_G.AutoBountyQuest = tgbtq
+			saveSettings()
+		end)
+
+		local bountyBoss = {
+			"Criminal",
+			"Toji",
+			"Snow Bandit Leader",
+			"Shank",
+			"Gojo",
+			"Sukuna",
+			"Tatsumaki",
+			"Artoria",
+			"Natsu",
+			"Cid"
+		}
+
+		local function HandleRespawn()
+			if _G.AutoBountyQuest then
+				-- Reset any state or actions related to the player's character being respawned
+				-- You can add logic here to resume the auto bounty quest functionality
+			end
+		end
+
+		game.Players.LocalPlayer.CharacterAdded:Connect(HandleRespawn)
+
+		spawn(function()
+			while true do
+				if _G.AutoBountyQuest then
+					local success, error = pcall(function()
+						local bossFound = false
+						for _, v in pairs(game.Workspace.Lives:GetChildren()) do
+							if table.find(bountyBoss, v.Name) then
+								if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+									bossFound = true
+									if game.Players.LocalPlayer.Character then
+										game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+										repeat
+											wait()
+											if not _G.AutoBountyQuest or v.Humanoid.Health <= 0 then
+												break
+											end
+											if game.Players.LocalPlayer.Character then
+												game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+											end
+											wait(.3)
+											if game.Players.LocalPlayer.Character then
+												-- randomTeleport
+												randomTeleport()
+											end
+											wait(.2)
+										until not _G.AutoBountyQuest or v.Humanoid.Health <= 0
+										break
+									end
+								end
+							end
+						end
+
+						if not bossFound then
+							wait()
+							if game.Players.LocalPlayer.Character then
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.NPC.Kuru.HumanoidRootPart.CFrame * CFrame.new(0, 0, -7)
+								for _, v in pairs(game.Workspace.NPC:GetDescendants()) do
+									if v.ClassName == "ProximityPrompt" then
+										fireproximityprompt(v, 30)
+									end
+								end
+							end
+						end
+					end)
+
+					if not success then
+						warn("Screenshot this error to mituma:", error)
+					end
+				end
+				wait() -- Add wait() to reduce resource usage
+			end
+		end)
+
+
+		local APE = Tabs.Portals:AddToggle("APE", {Title = "Auto Enter Portal", Default = _G.AutoJoinPortal })
+		APE:OnChanged(function(aeptg)
+			_G.AutoJoinPortal = aeptg
+			saveSettings()
+		end)
+
+		spawn(function()
+			pcall(function()
+				game:GetService("RunService").Stepped:Connect(function()
+					if _G.AutoJoinPortal then
+						if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							local Noclip = Instance.new("BodyVelocity")
+							Noclip.Name = "BodyClip"
+							Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+							Noclip.MaxForce = Vector3.new(100000,100000,100000)
+							Noclip.Velocity = Vector3.new(0,0,0)
+						end
+					else    
+						if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+						end
+					end
+				end)
+			end)
+		end)
+
+
+
+
+		local Bossza = Tabs.Bossz:AddParagraph({
+
+
+
+			Title = "Check Boss", -- Title > SetTitle
+
+			Content = "Status: "   --Content > SetDesc
+		})
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					No()
+					if game:GetService("Workspace").Lives:FindFirstChild(_G.Selectspawn) then
+						Bossza:SetTitle("Boss : โ…")
+						Bossza:SetDesc("Health : "..(workspace.Lives[_G.Selectspawn].Humanoid.Health).." / "..(workspace.Lives[_G.Selectspawn].Humanoid.MaxHealth))
+					else
+						Bossza:SetTitle("Boss : โ")
+						Bossza:SetDesc("Health : 0")
+					end
+				end)
+			end
+		end)
+
+
+
+		local SelectSpawn = Tabs.Bossz:AddDropdown("SelectSpawn", {
+			Title = "Select Boss Spawn",
+			Values = {"", "Choso" ,"Killua", "Toji", "Gojo [Unleashed]", "Sukuna [Half Power]"},
+			Multi = false,
+			Default = _G.Selectspawn,
+			Callback = function(VK)
+				_G.Selectspawn = VK
+				saveSettings()
+			end
+		})
+
+
+
+		function spawnboss()
+			if _G.Selectspawn == "Choso" then
+				NameBossspawn = "Choso"
+				Itembossspawn = "[Choso] Cursed Womb"
+			elseif _G.Selectspawn == "Killua" then
+				NameBossspawn = "Killua"
+				Itembossspawn = "Heart Bag"
+			elseif _G.Selectspawn == "Gojo [Unleashed]" then
+				NameBossspawn = "Gojo [Unleashed]"
+				Itembossspawn = "Infinity Orb"
+			elseif _G.Selectspawn == "Toji" then
+				NameBossspawn = "Toji"
+				Itembossspawn = "[Amanai] Summon Ticket"
+			elseif _G.Selectspawn == "Sukuna [Half Power]" then
+				NameBossspawn = "Sukuna [Half Power]"
+				Itembossspawn = "Sukuna Fingers Bag"
+			end
+		end
+
+
+
+
+
+
+		Tabs.Bossz:AddButton({
+
+			Title = "Trading Item Spawn Boss",
+
+			Description = "",
+			Callback = function()
+				spawnboss()
+
+				local args = {
+
+					[1] = "Chxmei",
+					[2] = Itembossspawn
+				}
+				game:GetService("ReplicatedStorage").Remotes.BuyItem:FireServer(unpack(args))
+			end
+		})
+
+
+		Tabs.Bossz:AddButton({
+
+			Title = "Take out the item",
+
+			Description = "",
+			Callback = function()
+				spawnboss()
+
+				local args = {
+
+					[1] = Itembossspawn
+				}
+				game:GetService("ReplicatedStorage").Remotes.EquipItem:FireServer(unpack(args))
+			end
+		})
+
+
+		local SpawnBosss = Tabs.Bossz:AddToggle("SpawnBosss", {Title = "Auto Spawn Boss", Default = false })
+		SpawnBosss:OnChanged(function(S)
+			_G.AutoBossspawn = S
+			_G.hee = false
+			CF = CFrame.new(2086.08057, 118.110451, -2335.31616, -0.212451905, 1.5769519e-08, -0.97717154, 3.42127926e-08, 1, 8.6995442e-09, 0.97717154, -3.15835322e-08, -0.212451905)
+
+			spawn(function()
+				while wait() do
+					if _G.AutoBossspawn then
+						pcall(function()    
+							No()
+							spawnboss()
+							for _,v in pairs(game:GetService("Workspace").Lives:GetChildren()) do
+								if v.Name == NameBossspawn and v.Humanoid.Health > 0  then
+									_G.hee = false
+									repeat task.wait()
+										TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+									until _G.AutoBossspawn == false
+								else
+									_G.hee = true
+									TP(CF)
+								end
+							end
+						end)
+					end
+				end
+			end)
+
+			spawn(function()
+				while wait() do
+					if _G.AutoBossspawn then
+						pcall(function()    
+							if _G.hee then
+								local player = game.Players.LocalPlayer
+								local backpack = player.Backpack
+								spawnboss()
+								for i, v in pairs(backpack:GetChildren()) do
+									if v.Name == Itembossspawn then
+										player.Character:WaitForChild("Humanoid"):EquipTool(v)
+									end
+								end
+							end
+						end)
+					end
+				end
+			end)
+
+			spawn(function()
+				while wait() do
+					if _G.AutoBossspawn then
+						pcall(function()    
+							if _G.hee then
+								for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+									if v.ClassName == "ProximityPrompt" then
+										fireproximityprompt(v,30)
+									end
+								end
+							end
+						end)
+					end
+				end
+			end)
+
+			spawn(function()
+				while wait() do
+					pcall(function()
+						if _G.AutoBossspawn then
+							for i,v in pairs(game:GetService("Workspace").Chests:GetDescendants()) do
+								if v.ClassName == "ProximityPrompt" then
+									repeat task.wait()
+										TP(v.Parent.CFrame)
+										fireproximityprompt(v,30)
+									until _G.AutoBossspawn == false
+								end
+							end
+						end
+					end)
+				end
+			end)
+
+			spawn(function()
+				while wait() do
+					if _G.AutoBossspawn then
+						pcall(function()    
+							if _G.hee == false then
+								local player = game.Players.LocalPlayer
+								local backpack = player.Backpack
+
+								for i, v in pairs(backpack:GetChildren()) do
+									item()
+									if table.find(_G.it, v.Name) then
+										player.Character:WaitForChild("Humanoid"):EquipTool(v)
+									end
+								end
+							end
+						end)
+					end
+				end
+			end)
+		end)
+
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Starter Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-898.974243, 34.5999947, -559.051453, 0.0182777327, 3.36339987e-08, -0.999832928, -6.71313103e-08, 1, 3.24124017e-08, 0.999832928, 6.65276758e-08, 0.0182777327))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+
+			Title = "Orange Island",
+
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(74.4107437, 36.9179535, 79.3588791, -0.999664903, 3.31894299e-08, -0.0258848667, 3.20130162e-08, 1, 4.58622864e-08, 0.0258848667, 4.50182682e-08, -0.999664903))
+			end
+		})
+
+
+		Tabs.Island:AddButton({
+			Title = "Shell Town",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(970.893616, 38.1857834, 1213.4187, -0.996786118, 8.42887182e-09, -0.080108963, 8.41724823e-09, 1, 4.8278137e-10, 0.080108963, -1.93067271e-10, -0.996786118))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Ape Realm",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(733.496582, 38.3316078, -1355.04333, -0.936901212, -1.07924315e-07, -0.349594265, -9.96208982e-08, 1, -4.17323243e-08, 0.349594265, -4.27217017e-09, -0.936901212))
+			end
+		})
+
+
+		Tabs.Island:AddButton({
+			Title = "Mango Isle",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-911.301392, 41.2879791, 1088.74219, 0.997904539, 1.66778047e-09, 0.0647038668, -5.52431301e-09, 1, 5.9423904e-08, -0.0647038668, -5.9656827e-08, 0.997904539))
+			end
+		})
+
+
+		Tabs.Island:AddButton({
+			Title = "Frost Isle",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(1746.5188, 42.9720383, -167.28302, -0.0984651223, 9.56885273e-08, -0.995140493, -1.83589286e-08, 1, 9.79723396e-08, 0.995140493, 2.79165722e-08, -0.0984651223))
+			end
+		})
+
+
+		Tabs.Island:AddButton({
+			Title = "Arena Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-1748.12256, 38.3027344, -2731.5647, -0.999986649, -4.07616874e-09, 0.00517317979, -4.20341095e-09, 1, -2.45856029e-08, -0.00517317979, -2.46070186e-08, -0.999986649))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Warrior's Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-694.33667, 72.2849884, -4241.08984, -0.999456286, -6.74034411e-08, -0.0329719782, -6.97373963e-08, 1, 6.96360658e-08, 0.0329719782, 7.18975812e-08, -0.999456286))
+			end
+		})
+
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Autumnal Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-1814.8197, 81.5145187, 675.076843, 0.999465942, 7.75882683e-08, 0.0326769426, -7.86878047e-08, 1, 3.23627418e-08, -0.0326769426, -3.49167344e-08, 0.999465942))
+			end
+		})
+
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Forgotten Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-695.397583, 44.025898, -2004.11902, 0.999338925, -4.83633311e-09, 0.0363560542, 8.25968627e-09, 1, -9.40116536e-08, -0.0363560542, 9.4249792e-08, 0.999338925))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Cursed Isle",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-2203.427, 40.2717476, -1220.50366, -0.986698627, -2.22477081e-09, 0.162560165, 3.8775787e-09, 1, 3.72217421e-08, -0.162560165, 3.73569797e-08, -0.986698627))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Chxmei Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(497.929443, 34.5998955, -3094.66699, -0.0192264654, -5.09017362e-08, 0.999815166, -8.70739143e-08, 1, 4.92367143e-08, -0.999815166, -8.61111715e-08, -0.0192264654))
+			end
+		})
+
+
+
+		Tabs.Island:AddButton({
+			Title = "Niflheim Island",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(2019.97729, 118.110451, -2310.68457, -0.999597907, 0, -0.0283546709, 0, 0.99999994, -0, 0.0283546709, -0, -0.999597907))
+			end
+		})
+
+
+		local SliderStats = Tabs.Stats1:AddSlider("SliderStats", {
+			Title = "Point Amount",
+			Description = "Nigga56",
+			Default = 1 or _G.Ve,
+			Min = 1,
+			Max = 100,
+			Rounding = 1,
+			Callback = function(Value)
+				_G.Ve = Value
+				saveSettings()
+			end
+		})
+
+		SliderStats:OnChanged(function(Value)
+			_G.Ve = Value
+			saveSettings()
+		end)
+
+
+		Tabs.Stats1:AddButton({
+			Title = "Refresh Stats",
+			Description = "",
+			Callback = function()
+				game:GetService("ReplicatedStorage").Remotes.ResetStats:FireServer()
+			end
+		})
+
+		local ToggleMelee = Tabs.Stats1:AddToggle("ToggleMelee", {Title = "Melee", Default = false })
+		ToggleMelee:OnChanged(function(tgmelee)
+			_G.AutoMelee = tgmelee
+			saveSettings()
+		end)
+
+		local ToggleWeapon = Tabs.Stats1:AddToggle("ToggleWeapon", {Title = "Weapon", Default = false })
+		ToggleWeapon:OnChanged(function(tgweapon)
+			_G.AutoWeapon = tgweapon
+			saveSettings()
+		end)
+
+		local ToggleDefense = Tabs.Stats1:AddToggle("ToggleDefense", {Title = "Defense", Default = false })
+		ToggleDefense:OnChanged(function(tgdefense)
+			_G.AutoDefense = tgdefense
+			saveSettings()
+		end)
+
+		local ToggleFruit = Tabs.Stats1:AddToggle("ToggleFruit", {Title = "Demon Fruit", Default = false })
+		ToggleFruit:OnChanged(function(tgfruit)
+			_G.AutoFruit = tgfruit
+			saveSettings()
+		end)
+
+		------- Function
+
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.AutoMelee then
+					local args = {
+						[1] = "Melee",
+						[2] = _G.Ve
+					}
+
+					game:GetService("ReplicatedStorage").Remotes.UpStats:FireServer(unpack(args))
+				end
+			end
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.AutoWeapon then
+					local args = {
+						[1] = "Weapon",
+						[2] = _G.Ve
+					}
+
+					game:GetService("ReplicatedStorage").Remotes.UpStats:FireServer(unpack(args))
+				end
+			end
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.AutoDefense then
+					local args = {
+						[1] = "Defense",
+						[2] = _G.Ve
+					}
+
+					game:GetService("ReplicatedStorage").Remotes.UpStats:FireServer(unpack(args))
+				end
+			end
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.AutoFruit then
+					local args = {
+						[1] = "DemonFruit",
+						[2] = _G.Ve
+					}
+
+					game:GetService("ReplicatedStorage").Remotes.UpStats:FireServer(unpack(args))
+				end
+			end
+		end)
+
+
+		---------
+		Tabs.Shop:AddButton({
+			Title = "Katana",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Katana:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "Random DemonFruit",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.RandomDemonFruit:GetChildren()) do
+					if v.ClassName == "ProximityPrompt" then
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end   
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "Yoru",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Yoru:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "Sukuna",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Sukuna:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "SukunaV2",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop["Sukuna [Half Power]"]:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+
+		Tabs.Shop:AddButton({
+			Title = "Higuruma",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Higuruma:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "Gojo",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Gojo:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "GojoV2",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.GojoV2:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "Choso",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Choso:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "Hakari",
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-1886.86145, 62.0619888, 252.292877, 0.974505782, 7.85496024e-09, 0.224362493, -1.88698142e-08, 1, 4.69498396e-08, -0.224362493, -4.99865678e-08, 0.974505782))
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "Cid",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Cid:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "KashimoV1",
+			Description = "",
+			Callback = function()
+				for i,v in 
+
+					pairs(game:GetService("Workspace").Shop.KashimoV1:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "KashimoV2",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.KashimoV2:GetChildren()) do
+					if v.ClassName == "ProximityPrompt" then
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+
+		Tabs.Shop:AddButton({
+			Title = "Itadori",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Itadori:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+		Tabs.Shop:AddButton({
+			Title = "Gon",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Gon:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "Uraume",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Uraume:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+					end
+				end
+			end
+		})
+
+
+
+
+		Tabs.Shop:AddButton({
+
+			Title = "Merchant",
+
+			Description = "",
+			Callback = function()
+				TP(CFrame.new(-637.258911, 64.484993, -4232.65381, 0.997468472, -2.76135541e-08, -0.0711097643, 3.43178499e-08, 1, 9.30592279e-08, 0.0711097643, -9.52639851e-08, 0.997468472))
+			end
+		})
+
+		Tabs.Shop:AddButton({
+			Title = "Remove Fruit from lnventory",
+			Description = "",
+			Callback = function()
+				for i,v in pairs(game:GetService("Workspace").Shop.Garbage:GetChildren()) do
+
+					if v.ClassName == "ProximityPrompt" then
+
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame * CFrame.new(3,1,0)
+					end
+				end
+			end
+		})
+
+
+		local playerr = Tabs.Player:AddParagraph({
+
+			Title = "Check Player", -- Title > SetTitle
+
+			Content = "Status: "   --Content > SetDesc
+		})
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if game:GetService("Players"):FindFirstChild(_G.SelectPly) then
+						playerr:SetTitle("Player : "..(game.Players[_G.SelectPly].Name))
+						playerr:SetDesc("Health : "..(game.Players[_G.SelectPly].Character.Humanoid.Health).." / "..(game.Players[_G.SelectPly].Character.Humanoid.MaxHealth))
+					else
+						playerr:SetTitle("Player : ???")
+						playerr:SetDesc("Health : ???")
+					end
+				end)
+			end
+		end)
+
+
+
+		Playerslist = {"Unselected"}
+
+		for i,v in pairs(game:GetService("Players"):GetChildren()) do
+			table.insert(Playerslist,v.Name)
+		end
+
+		local SelectedPly = Tabs.Player:AddDropdown("Select player", {
+			Title = "Select Player",
+			Values = Playerslist,
+			Multi = false,
+			Default = 1,
+			Callback = function(v)
+				_G.SelectPly = v
+			end
+		})
+
+
+
+
+		Tabs.Player:AddToggle("Auto player", {
+			Title = "Spectate Player","Spectate", 
+			Default = false, 
+			Callback = function(S) 
+				SpectatePlys = S
+				local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+				local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+				repeat wait(.1)
+					game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+				until SpectatePlys == false 
+				game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+			end 
+		}) 
+
+
+		Tabs.Player:AddButton({
+			Title = "Teleport",
+			Callback = function()
+				TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+			end
+		})
+
+
+		Tabs.Player:AddToggle("Auto player", {
+			Title = "Auto Teleport", 
+			Default = false, 
+			Callback = function(S) 
+				_G.TeleportPly = S
+				pcall(function()
+					if _G.TeleportPly then
+						repeat task.wait() TP(game:GetService("Players")[_G.SelectPly].Character.HumanoidRootPart.CFrame * MethodFarm) wait() until _G.TeleportPly == false
+					end
+				end)
+			end 
+		}) 
+
+
+
+		Tabs.Fruit:AddDropdown("Select Fruit", {
+			Title = "Select Fruit",
+			Values = {"Unselected", "God Light Fruit", "Dark Flame Fruit", "Operation Fruit"},
+			Multi = false,
+			Default = 1 or _G.FruitSelect,
+			Callback = function(v)
+				_G.FruitSelect = v 
+				saveSettings()
+			end
+		})
+
+
+		Tabs.Fruit:AddToggle("Auto Random Fruit Select", {
+
+			Title = "Auto Random Fruit Select Gem", 
+			Default = _G.FruitRD, 
+			Callback = function(FSE) 
+				_G.FruitRD = FSE 
+				saveSettings()
+			end 
+		})
+
+		Tabs.Fruit:AddToggle("Auto Random Fruit Select", {
+			Title = "Auto Random Fruit Select Beli", 
+			Default = _G.ZXC, 
+			Callback = function(ZXCVGF) 
+				_G.ZXC = ZXCVGF 
+				saveSettings()
+			end 
+		})
+
+
+
+		local Options = Fluent.Options
+		function Nofty()
+
+			Fluent:Notify({
+				Title = "Auto Fruit",
+				Content = "You've got selected fruit",
+				Duration = 8
+			})
+		end
+
+
+
+		local Fruitteen = CFrame.new(-923.741211, 34.5999947, -598.191101, 0.153211042, 1.10066178e-08, 0.988193512, 1.39976652e-08, 1, -1.33083393e-08, -0.988193512, 1.5871386e-08, 0.153211042)
+
+		local CFGGH = CFrame.new(949.265076, 63.661293, 1325.66138, -0.999855816, 7.24053209e-08, -0.0169815868, 7.27011411e-08, 1, -1.68027903e-08, 0.0169815868, -1.80349495e-08, -0.999855816)
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if _G.FruitRD then
+						for i,v in pairs(game:GetService("Workspace").Shop:GetDescendants()) do
+							if v.ClassName == "ProximityPrompt" then
+								fireproximityprompt(v,30)
+								TP(Fruitteen)
+								if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(_G.FruitSelect)) then
+									break
+								end
+							end
+						end
+					end
+				end)
+			end
+		end)
+
+
+		spawn(function()
+			while wait()do
+				if _G.FruitRD then
+					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(_G.FruitSelect)) then
+						wait(1)
+						Nofty()
+					end
+				end
+			end
+		end)
+
+
+
+
+
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if _G.ZXC then
+						for i,v in pairs(game:GetService("Workspace").Shop:GetDescendants()) do
+							if v.ClassName == "ProximityPrompt" then
+								fireproximityprompt(v,30)
+								TP(CFGGH)
+								if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(_G.FruitSelect)) then
+									break
+								end
+							end
+						end
+					end
+				end)
+			end
+		end)
+
+
+		spawn(function()
+			while wait()do
+				if _G.ZXC then
+					if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(_G.FruitSelect)) then
+						wait(1)
+						Nofty()
+					end
+				end
+			end
+		end)
+
+		local ToggleNot = Tabs.Misc:AddToggle("Togglevu", {Title = "Notify", Default = true })
+
+		ToggleNot:OnChanged(function(togglentf)
+			game.Players.LocalPlayer.PlayerGui.NotifyUI.Enabled = togglentf
+		end)
+
+
+		local Togglevu = Tabs.Misc:AddToggle("Togglevu", {Title = "Anti AFK", Default = true })
+
+		Togglevu:OnChanged(function()
+
+			local vu = game:GetService("VirtualUser")
+			repeat wait() until game:IsLoaded() 
+			game:GetService("Players").LocalPlayer.Idled:connect(function()
+				game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+				vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+				wait(1)
+				vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+			end)
+		end)
+
+		Tabs.Misc:AddToggle("AutW", {
+			Title = "White Screen",
+			Default = _G.WhiteScreen,
+			Callback = function(S)
+				_G.WhiteScreen = S 
+				saveSettings()
+			end
+		})
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.WhiteScreen then
+					game:GetService("RunService"):Set3dRenderingEnabled(false)
+					repeat
+						wait()
+					until not _G.WhiteScreen
+					game:GetService("RunService"):Set3dRenderingEnabled(true)
+				end
+			end
+		end)
+
+		Tabs.Misc:AddInput("Input", {
+			Title = "Place Job ID",
+			Default = "",
+			Placeholder = tostring(game.JobId),
+			Numeric = false,
+			Finished = false,
+			Callback = function(gay)
+				_G.Job = gay
+			end
+		})
+
+		Tabs.Misc:AddButton({
+			Title = "Copy Job ID",
+			Callback = function()
+				setclipboard(tostring(game.JobId))
+			end
+		})
+
+		Tabs.Misc:AddButton({
+			Title = "Join Sever",
+			Callback = function()
+				game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId,_G.Job, game.Players.LocalPlayer)
+			end
+		})
+
+
+		-----------
+
+
+		Tabs.Misc:AddButton({
+			Title = "Boost FPS",
+			Callback = function()
+				local decalsyeeted = true
+				local g, w, l = game, game.Workspace, game.Lighting
+				local t = w.Terrain
+				sethiddenproperty(l, "Technology", 2)
+				sethiddenproperty(t, "Decoration", false)
+				t.WaterWaveSize, t.WaterWaveSpeed, t.WaterReflectance, t.WaterTransparency = 0, 0, 0, 0
+				l.GlobalShadows, l.FogEnd, l.Brightness = false, 9e9, 0
+				Misc().Rendering.QualityLevel = "Level01"
+
+				local function handleDescendant(v)
+					if v:IsA("Accessory") or v:IsA("Shirt") or v:IsA("Pants") or v:IsA("ShirtGraphic") then
+						v:Remove()
+					elseif v:IsA("BasePart") and not v:IsA("MeshPart") then
+						v.Material, v.Reflectance = "Plastic", 0
+					elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+						v.Transparency = 1
+					elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+						v.Lifetime = NumberRange.new(0)
+					elseif v:IsA("Explosion") then
+						v.BlastPressure, v.BlastRadius = 1, 1
+					elseif (v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles")) then
+						v.Enabled = false
+					elseif v:IsA("MeshPart") and decalsyeeted then
+						v.Material, v.Reflectance, v.TextureID = "Plastic", 0, 10385902758728957
+					elseif v:IsA("SpecialMesh") and decalsyeeted then
+						v.TextureId = 0
+					end
+				end
+
+				for _, v in pairs(w:GetDescendants()) do
+					handleDescendant(v)
+				end
+
+				w.DescendantAdded:Connect(function(v)
+					wait()
+					handleDescendant(v)
+				end)
+
+				for _, e in ipairs(l:GetChildren()) do
+					if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+						e.Enabled = false
+					end
+				end
+			end
+		})
+
+		Tabs.Misc:AddButton({
+			Title = "Unlock FPS",
+			Callback = function()
+				loadstring(game:HttpGet("https://pastebin.com/raw/y5reZYnG", true))()
+			end
+		})
+
+
+		Tabs.Misc:AddButton({
+			Title = "Server Hop",
+			Callback = function()
+				local Http = game:GetService("HttpService") local TPS = game:GetService("TeleportService") local Api = "https://games.roblox.com/v1/games/" local _place = game.PlaceId local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100" function ListServers(cursor) local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) return Http:JSONDecode(Raw) end local Server, Next; repeat local Servers = ListServers(Next) Server = Servers.data[1] Next = Servers.nextPageCursor until Server TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+			end
+		})
+
+
+
+
+
+		-- Addons:
+
+		-- SaveManager (Allows you to have a configuration system)
+
+		-- InterfaceManager (Allows you to have a interface managment system)
+		InterfaceManager:SetLibrary(Fluent)
+		-- use case for doing it this way:
+		-- a script hub could have themes in a global folder
+		-- and game configs in a separate folder per game
+		InterfaceManager:SetFolder("ZA_HUB")
+		InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+		Window:SelectTab(1)
+
+
+
+		local ScreenGui1 = Instance.new("ScreenGui")
+		local ImageButton1 = Instance.new("ImageButton")
+		local UICorner = Instance.new("UICorner")
+
+		ScreenGui1.Name = "ImageButton"
+		ScreenGui1.Parent = game.CoreGui
+		ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+		ImageButton1.Parent = ScreenGui1
+		ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+		ImageButton1.BorderSizePixel = 0
+		ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+		ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+		ImageButton1.Draggable = true
+		ImageButton1.Image = "rbxassetid://17104270399"
+		ImageButton1.MouseButton1Down:Connect(function()
+			game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+			game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+		end)
+		UICorner.Parent = ImageButton1
+
+		do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+				_G.Color = Color3.fromRGB(230, 5, 12)
+			end 
+		end
+
+
+		-- Function to check portal spawning and player joining
+		local function checkPortalAndPlayer()
+			while true do
+				wait(0.5) -- Adjust the wait time as needed
+
+				local portal = game.Workspace.World.Portal
+				local children = portal:GetChildren()
+				local player = game.Players.LocalPlayer
+				local playerName = player.Name
+
+				local portalSpawned = #children > 0
+				_G.PortalSpawned = portalSpawned
+
+				local playerJoinedPT = false
+				for _, child in ipairs(children) do
+					local dungeon = child:FindFirstChild("Script") and child.Script:FindFirstChild("Dungeon")
+					if dungeon and dungeon:FindFirstChild(playerName) then
+						playerJoinedPT = true
+						break
+					end
+				end
+				_G.PlayerJoinedPT = playerJoinedPT
+			end
+		end
+
+		-- Run the function in a separate thread
+		spawn(checkPortalAndPlayer)
+
+		spawn(function()
+			while true do 
+				wait()
+				if _G.AutoJoinPortal and _G.PortalSpawned then
+					local portalFolder = game.workspace.World.Portal
+
+					for _, portalChild in ipairs(portalFolder:GetChildren()) do
+						if tonumber(portalChild.Name) then
+							local portalPos = portalChild.CFrame
+							TP(portalPos)
+							break
+						end
+					end
+				end
+
+				if _G.AutoJoinPortal and _G.PortalSpawned then
+					if _G.PlayerJoinedPT == false then
+						for _, v in pairs(game:GetService("Workspace").World.Portal:GetDescendants()) do
+							if v.ClassName == "ProximityPrompt" then
+								fireproximityprompt(v, 30)
+								TP(v.Parent.CFrame)
+							end
+						end
+					end
+				end
+			end
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				if _G.AutoJoinPortal and _G.PortalSpawned then
+					_G.FruitRD = false
+					_G.ZXC = false
+					_G.hee = false
+					_G.AutoBossspawn = false
+					_G.AutoGem = false
+					_G.AutoBoss = false
+					_G.Fd = false
+					_G.F = false
+					_G.AutoFarmlv = false
+				end
+			end
+		end)
+
+	end
+
+end
+
+
+
+---SPPortal
+
+if SPPortal then
+	local startTime = os.time() -- Record the starting time
+
+	print('Game Loading: Second Piece - Dungeon')
+
+	repeat 
+		task.wait() 
+	until game:IsLoaded()
+
+	local endTime = os.time() -- Record the ending time
+	local elapsedTime = endTime - startTime -- Calculate elapsed time
+
+	print('Game Loaded: ' .. elapsedTime .. ' seconds')
+	print('Game Finished Loading')
+
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	local Window = Fluent:CreateWindow({
+		Title = "ZA HUB  Premium SCRIPT",
+		SubTitle = "by ZA HUB",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(500, 370),
+		Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+	})
+
+	--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "swords" }),
+		Skills = Window:AddTab({ Title = "Skills", Icon = "flame" }),
+		Settings = Window:AddTab({ Title = "Config", Icon = "settings" })  
+	}
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+	do
+
+		Tabs.Main:AddParagraph({
+
+			Title = "Auto Farm Portal",
+
+			Content = "Stand proud Barlos, you're strong..."
+		})
+
+		Tabs.Skills:AddParagraph({
+
+			Title = "Auto Skill Section",
+
+			Content = "Trading ZA HUB for 70 Robux"
+		})
+
+		-- Portal Mob
+		local moblist = {
+			"Marine",
+			"Vice Admiral",
+			"Lieutenant Marine",
+			"Captain",
+			"Kizaru",
+			"Bandit",
+			"Bandit Leader Dungeon",
+			"Sorcerer",
+			"Itadori",
+			"Hakari",
+			"Gojo Satoru",
+			"Mihawk",
+			"Shadow Soldier",
+			"Shadow Excalibur",
+			"Shadow Natsu",
+			"Shadow Sukuna",
+			"Shadow Lord",
+			"Shadow",
+			"Umbra Knight"
+		}
+
+		local AutoPortal = Tabs.Main:AddToggle("AutoPortal", {Title = "Auto Mob", Default = _G.AutoPortal })
+		AutoPortal:OnChanged(function(autoportal)
+			_G.AutoPortal = autoportal 
+			saveSettings()
+		end)
+
+		-- Auto Portal Mob
+		spawn(function()
+			while wait() do
+				pcall(function()
+					if _G.AutoPortal then
+						for _, v in pairs(game:GetService("Workspace").Lives:GetChildren()) do
+							local isPlayer = false
+							for _, player in ipairs(game.Players:GetPlayers()) do
+								if string.match(v.Humanoid.DisplayName, player.Name) then
+									isPlayer = true
+									break
+								end
+							end
+							if isPlayer then
+								-- continue
+							end
+							for _, name in ipairs(moblist) do
+								if string.match(v.Humanoid.DisplayName, name) then
+									if v.Humanoid.Health > 0 then
+										-- Disable mob movement and collisions
+										v.HumanoidRootPart.Transparency = 0.9
+										v.Humanoid.WalkSpeed = 0
+										v.Humanoid.JumpPower = 0
+										v.HumanoidRootPart.CanCollide = false
+										v.Head.CanCollide = false
+										-- Destroy animator to prevent animation
+										if v.Humanoid:FindFirstChild("Animator") then
+											v.Humanoid.Animator:Destroy()
+										end
+										repeat task.wait()
+											TP(v.HumanoidRootPart.CFrame * CFrame.new(0,0,6))
+										until not _G.AutoPortal or v.Humanoid.Health <= 0
+									end
+								end
+							end
+						end
+					end
+				end)
+			end
+		end)
+
+
+		-- Auto Ready
+
+		local AutoReady = Tabs.Main:AddToggle("AutoReady", {Title = "Auto Ready", Default = _G.AutoReady })
+		AutoReady:OnChanged(function(readyauto)
+			_G.AutoReady = readyauto 
+			saveSettings()
+		end)
+
+		spawn(function()
+			while true do 
+				wait()
+				if _G.AutoReady then
+					local Remotes = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+					repeat
+						wait()
+						Remotes:WaitForChild("Ready"):FireServer()
+					until not _G.AutoReady
+				end
+			end
+		end)
+
+
+		-- Skills
+
+		local function PressKey(key)
+			game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode[key], false, game)
+		end
+
+		local function CheckAutoSkills()
+			while _G.AutoSkill do
+				wait(0.1)
+				if _G.AutoPortal then
+					if _G.AutoZ then
+						PressKey("Z")
+					end
+					if _G.AutoX then
+						PressKey("X")
+					end
+					if _G.AutoC then
+						PressKey("C")
+					end
+					if _G.AutoV then
+						PressKey("V")
+						if _G.AutoF then
+							PressKey("F")
+						end
+					end
+				end
+			end
+		end
+
+		local function AutoSkillCheck()
+			spawn(function()
+				while true do
+					wait()
+					if _G.AutoSkill then
+						CheckAutoSkills()
+					end
+				end
+			end)
+		end
+
+		AutoSkillCheck()
+
+		local AutoSkill = Tabs.Main:AddToggle("AutoSkill", {Title = "Auto Use Skills", Default = _G.AutoSkill })
+		AutoSkill:OnChanged(function(autoskill)
+			_G.AutoSkill = autoskill 
+			AutoSkillCheck() -- Call the function whenever AutoSkill changes
+			saveSettings()
+		end)
+
+		local Z = Tabs.Skills:AddToggle("Z", {Title = "Auto Z", Default = _G.AutoZ })
+		Z:OnChanged(function(autoz)
+			_G.AutoZ = autoz 
+		end)
+
+		local X = Tabs.Skills:AddToggle("X", {Title = "Auto X", Default = _G.AutoX })
+		X:OnChanged(function(autox)
+			_G.AutoX = autox 
+		end)
+
+		local C = Tabs.Skills:AddToggle("C", {Title = "Auto C", Default = _G.AutoC })
+		C:OnChanged(function(autoc)
+			_G.AutoC = autoc 
+		end)
+
+		local V = Tabs.Skills:AddToggle("V", {Title = "Auto V", Default = _G.AutoV })
+		V:OnChanged(function(autov)
+			_G.AutoV = autov 
+		end)
+
+		local F = Tabs.Skills:AddToggle("F", {Title = "Auto F", Default = _G.AutoF })
+		F:OnChanged(function(autof)
+			_G.AutoF = autof 
+		end)
+
+		--- CONFIG
+		local Weaponlist = {}
+
+		local SelectWeapon = Tabs.Main:AddDropdown("SelectWeapon", {
+			Title = "Select Weapon",
+			Values = Weaponlist,
+			Multi = false,
+			Default = _G.Weapon,
+			Callback = function(selectedWeapon)
+				_G.Weapon = selectedWeapon
+				saveSettings()
+			end
+		})
+
+		local function RefreshWeaponList()
+			Weaponlist = {}
+			local backpack = game:GetService("Players").LocalPlayer.Backpack
+			if backpack then
+				for _, weapon in pairs(backpack:GetChildren()) do
+					table.insert(Weaponlist, weapon.Name)
+				end
+			end
+			SelectWeapon:SetValues(Weaponlist)
+		end
+
+		Tabs.Main:AddButton({
+			Title = "Refresh Weapon",
+			Description = "",
+			Callback = RefreshWeaponList
+		})
+
+		RefreshWeaponList()
+
+
+		-- Auto Equip
+		local AutoEquipped = false
+
+
+		local toggleAutoEquip = Tabs.Main:AddToggle("toggleAutoEquip", {Title = "Auto Equip", Default = _G.AutoEquipped })
+		toggleAutoEquip:OnChanged(function(isEnabled)
+			_G.AutoEquipped = isEnabled 
+			saveSettings()
+		end)
+
+
+
+		spawn(function()
+			while true do
+				if _G.AutoEquipped then
+					pcall(function()
+						local tool = game.Players.LocalPlayer.Backpack:FindFirstChild(_G.Weapon)
+						if tool then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+						end
+					end)
+				end
+				wait(0.2)
+			end
+		end)
+
+
+		-- Auto Attack
+		local toggleAutoAttack = Tabs.Main:AddToggle("toggleAutoAttack", {Title = "Auto Attack", Default = _G.AutoAttackToggle })
+		toggleAutoAttack:OnChanged(function(autoattack)
+			_G.Attacking = autoattack
+			_G.AutoAttackToggle = autoattack 
+			saveSettings()
+		end)
+
+
+		spawn(function()
+			while true do
+				if _G.AutoAttackToggle then
+					if _G.Attacking then
+						game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+						wait(0.3)
+					end
+				end
+				wait(0.1)
+			end
+		end)
+
+		game.Players.LocalPlayer.CharacterAdded:Connect(function()
+			_G.Attacking = false -- Stop auto attack when player respawns
+		end)
+
+		game.Players.LocalPlayer.CharacterRemoving:Connect(function()
+			_G.Attacking = false -- Stop auto attack when player dies
+		end)
+
+		spawn(function()
+			while true do
+				if game.Players.LocalPlayer.Character then
+					local humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+					if humanoid and humanoid.Health <= 0 then
+						_G.Attacking = false -- Stop auto attack when player dies
+					elseif humanoid and humanoid.Health > 0 then
+						wait(0.5) -- Wait 2 seconds after respawn
+						_G.Attacking = true -- Start auto attack again
+					end
+				end
+				wait(0.1)
+			end
+		end)
+
+
+		-- Respawn Handler
+		game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+			if _G.Attacking then
+				-- Re-enable auto attack if it was enabled before respawn
+				toggleAutoAttack(true)
+			end
+		end)
+
+
+		function TP(CFgo)
+			if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
+			local tween_s = game:service"TweenService"
+			local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/500, Enum.EasingStyle.Linear)
+			tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = CFgo})
+			tween:Play()
+
+			local tweenfunc = {}
+
+			function tweenfunc:Stop()
+				tween:Cancel()
+			end
+
+			return tweenfunc
+		end
+
+
+		local ToggleHaki = Tabs.Main:AddToggle("ToggleHaki", {Title = "Auto Haki", Default = _G.hee })
+		ToggleHaki:OnChanged(function(tttttyyy)
+			_G.hee = tttttyyy
+		end)
+
+		spawn(function()
+			while true do
+				wait()
+				pcall(function()
+					if _G.hee then
+						_G.ThisPlr = game.Players.LocalPlayer.Name
+						if workspace.Lives[_G.ThisPlr]["Left Arm"]:FindFirstChild("Haki") then
+							-- do nothing
+						else
+							local args = {
+								[1] = "BusoHaki"
+							}
+
+							game:GetService("ReplicatedStorage").Remotes.SkillHolder:FireServer(unpack(args))
+						end
+					end
+				end)
+			end
+		end)
+
+
+
+		-- Addons:
+
+		-- SaveManager (Allows you to have a configuration system)
+
+		-- InterfaceManager (Allows you to have a interface managment system)
+
+		-- Hand the library over to our managers
+		InterfaceManager:SetLibrary(Fluent)
+		-- use case for doing it this way:
+		-- a script hub could have themes in a global folder
+		-- and game configs in a separate folder per game
+		InterfaceManager:SetFolder("ZA_HUB")
+		InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+		Window:SelectTab(1)
+
+
+		local ScreenGui1 = Instance.new("ScreenGui")
+		local ImageButton1 = Instance.new("ImageButton")
+		local UICorner = Instance.new("UICorner")
+
+		ScreenGui1.Name = "ImageButton"
+		ScreenGui1.Parent = game.CoreGui
+		ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+		ImageButton1.Parent = ScreenGui1
+		ImageButton1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		ImageButton1.BorderSizePixel = 0
+		ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+		ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+		ImageButton1.Draggable = true
+		ImageButton1.Image = "rbxassetid://17104270399"
+		ImageButton1.MouseButton1Down:connect(function()
+			game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+			game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+		end)
+		UICorner.Parent = ImageButton1
+
+		do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+				_G.Color = Color3.fromRGB(230, 5, 12)
+			end 
+		end
+
+
+
+		spawn(function()
+			pcall(function()
+				game:GetService("RunService").Stepped:Connect(function()
+					if _G.AutoPortal then
+						if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							local Noclip = Instance.new("BodyVelocity")
+							Noclip.Name = "BodyClip"
+							Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+							Noclip.MaxForce = Vector3.new(100000,100000,100000)
+							Noclip.Velocity = Vector3.new(0,0,0)
+						end
+					else    
+						if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+							game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+						end
+					end
+				end)
+			end)
+		end)
+
+	end
+end
+
+
+
+--Rock Fruit World1
+
+if RFMain then
+
+
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	-- เธชเธฃเนเธฒเธ GUI Window
+	local Window = Fluent:CreateWindow({
+		Title = "ZA HUB",
+		SubTitle = "VIP SCRIPT ",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(520, 320),
+		Acrylic = false, 
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.RightControl
+	})
+
+
+	do
+		Client = game.Players.LocalPlayer
+		Char = Client and Client.Character
+		Root = Char and Char.HumanoidRootPart
+	end
+
+	dist = function(a, b, noHeight)
+		if not b then
+			b = Root.Position
+		end
+		return (Vector3.new(a.X, not noHeight and a.Y, a.Z) - Vector3.new(b.X, not noHeight and b.Y, b.Z)).magnitude
+	end
+
+
+	local ScreenGui1 = Instance.new("ScreenGui")
+	local ImageButton1 = Instance.new("ImageButton")
+	local UICorner = Instance.new("UICorner")
+
+	ScreenGui1.Name = "ImageButton"
+	ScreenGui1.Parent = game.CoreGui
+	ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageButton1.Parent = ScreenGui1
+	ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+	ImageButton1.BorderSizePixel = 0
+	ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton1.Draggable = true
+	ImageButton1.Image = "rbxassetid://17104270399"
+	ImageButton1.MouseButton1Down:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+	end)
+	UICorner.Parent = ImageButton1
+
+
+	do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+			_G.Color = Color3.fromRGB(230, 5, 12)
+		end 
+	end
+
+	-- เธชเธฃเนเธฒเธเนเธ—เนเธเธ—เธฑเนเธเธซเธกเธ”
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+		Webhook = Window:AddTab({ Title = "Webhook", Icon = "mail-plus" }),
+		item = Window:AddTab({ Title = "Farm item", Icon = "boxes" }),
+		Event = Window:AddTab({
+			Title = "Event", Icon = "backpack"
+		}),
+		Shop = Window:AddTab({ Title = "SHOP", Icon = "shopping-cart" }),
+		Dungeon = Window:AddTab({ Title = "Dungeon", Icon = "swords" }),
+		Settings = Window:AddTab({ Title = "Configs", Icon = "settings" })
+	}
+
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+
+
+	---เน€เธกเธเธน เธ”เธนเน€เธงเธฅเธฒ
+	local function formatTime(hours, minutes, seconds)
+		return string.format("%02d:%02d:%02d", hours, minutes, seconds)
+	end
+
+	local timerParagraph = Tabs.Main:AddParagraph({
+		Title = "Timer",
+		Content = ""
+	})
+
+	local function updateTimerDisplay()
+		local startTime = os.time()
+		while true do
+			local elapsedTime = os.time() - startTime
+			local hours = math.floor(elapsedTime / 3600)
+			local minutes = math.floor((elapsedTime % 3600) / 60)
+			local seconds = elapsedTime % 60
+
+			timerParagraph:SetDesc(formatTime(hours, minutes, seconds))
+			wait(1)
+		end
+	end
+
+	spawn(updateTimerDisplay)
+
+	--เน€เธกเธเธน Webhook
+
+	Tabs.Webhook:AddInput("Input", {
+		Title = "Webhook Item",
+		Default = "Webhook",
+		Placeholder = "nil",
+		Numeric = false, -- Only allows numbers
+		Finished = false, -- Only calls callback when you press enter
+		Callback = function(gay)
+			_G.Webhook = gay
+		end
+	})
+
+
+	local HttpService = game:GetService("HttpService")
+	local MarketplaceService = game:GetService("MarketplaceService")
+	local Players = game:GetService("Players")
+
+	local DName = Players.LocalPlayer.DisplayName
+	local GameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+
+	local requestfunc = syn and syn.request or request or http_request or http.request or fluxus and fluxus.request or game.HttpGet
+
+	local function sendNotification(toolName)
+		local req = requestfunc({
+			Url = _G.Webhook,
+			Method = 'POST',
+			Headers = {
+				['Content-Type'] = 'application/json'
+			},
+			Body = HttpService:JSONEncode({
+				["content"] = "<:notify:1228703986354491452> Rock Ftuit",
+				["embeds"] = {{
+					["title"] = "<:user:1228703738642960525> User : ||" .. DName .. "(@" .. Players.LocalPlayer.Name .. ")||",
+					["color"] = tonumber("0xFF0000"),
+					["description"] = "## You have received the item" ..
+						"\n <:joystick:946962437712797737>  Game : " .. GameName .. "\n  <:spirit:1228703937595441284>  Items: " ..
+						(toolName ..  " +1"),
+					["image"] = {
+						["url"] = "https://media.discordapp.net/attachments/1219347788610015423/1228689155735818320/standard.gif?ex=662cf4f2&is=661a7ff2&hm=1fd77da2d83164f76ce0d988a55d8e797e37db27caea54f6490654fd83bd3988&"
+					}
+				}}
+			})
+		})
+	end
+
+	local backpack = Players.LocalPlayer.Backpack
+
+	local function onChildAdded(child)
+		if child:IsA("Tool") then
+			local toolName = child.Name
+			sendNotification(toolName)
+		end
+	end
+
+	backpack.ChildAdded:Connect(onChildAdded)
+
+	---เน€เธกเธเธนEvent
+
+
+	Tabs.Event:AddParagraph({
+
+		Title = "Auto Cave Mineral",
+
+		Content = "Auto Cave Mineral"
+	})
+
+
+
+	local ToggleItem = Tabs.Event:AddToggle("ToggleItem", {Title = "Auto Sell", Default = _G.sellx })
+	ToggleItem:OnChanged(function(mpoo)
+		_G.sellx = mpoo
+		saveSettings()
+	end)
+
+	spawn(function()
+		while wait() do
+			if _G.sellx then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1173.23645, 11.0867929, 433.609314, 0.9936257, 1.22717678e-11, 0.112729415, 1.33213152e-09, 1, -1.18506058e-08, -0.112729415, 1.19252368e-08, 0.9936257)
+			end
+		end
+	end)
+
+
+
+
+
+
+	local CaveMineral = Tabs.Event:AddToggle("CaveMineral", {
+		Title = "Auto Cave Mineral", Default = _G.AutoCaveMineral
+	})
+	CaveMineral:OnChanged(function(DF)
+		_G.AutoCaveMineral  = DF
+		saveSettings()
+	end)
+
+
+
+	spawn(function()
+		while wait() do
+			pcall(function()
+				if _G.AutoCaveMineral then
+					for i,v in pairs(game:GetService("Workspace")[" island cave"].Rock:GetChildren()) do
+						if v.ClassName == "ProximityPrompt" then
+							repeat task.wait()
+								TP(v.Parent.CFrame)
+								fireproximityprompt(v,30)
+							until _G.AutoCaveMineral == false
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+
+
+	local PickaxeX = Tabs.Event:AddToggle("PickaxeX", {
+		Title = "Auto Receive Pickaxe", Default = _G.AutoReceivePickaxe
+	})
+	PickaxeX:OnChanged(function(DFXV)
+		_G.AutoReceivePickaxe  = DFXV
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		while wait() do
+			pcall(function()
+				if _G.AutoReceivePickaxe then
+					for i,v in pairs(game:GetService("Workspace")[" island cave"]["NPC Miner"]:GetDescendants()) do
+						if v.ClassName == "ProximityPrompt" then
+							repeat task.wait()
+								TP(v.Parent.CFrame)
+								fireproximityprompt(v,30)
+							until _G.AutoReceivePickaxe == false
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+
+
+	local Hakari = Tabs.Event:AddToggle("Hakari", {
+		Title = "Random Slot Hakari", Default = _G.AutoReceivePickaxe
+	})
+	Hakari:OnChanged(function(DFXV)
+		_G.RandomSlotHakari  = DFXV
+		saveSettings()
+	end)
+
+
+
+	spawn(function()
+		while wait() do
+			pcall(function()
+				if _G.RandomSlotHakari then
+					for i,v in pairs(game:GetService("Workspace")["Slot Machine"].Slot:GetDescendants()) do
+						if v.ClassName == "ProximityPrompt" then
+							repeat task.wait()
+								TP(v.Parent.CFrame)
+								fireproximityprompt(v,30)
+							until _G.RandomSlotHakari == false
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+
+
+
+
+
+	Tabs.Event:AddParagraph({
+
+		Title = "Auto Aizen",
+
+		Content = "Auto Aizen"
+	})
+
+
+
+
+
+	local SelectSpawn = Tabs.Event:AddDropdown("SelectSpawn", {
+		Title = "Select Boss Spawn",
+		Values = {
+			"Aizen"
+		},
+		Multi = false,
+		Default = _G.Selectspawn,
+		Callback = function(VK)
+			_G.Selectspawn = VK
+			saveSettings()
+		end
+	})
+
+
+
+	function spawnboss()
+		if _G.Selectspawn == "Aizen" then
+			NameBossspawn = "Aizen"
+			Itembossspawn = "Orb Quincy"
+		end
+	end
+
+
+
+	Tabs.Event:AddButton({
+
+		Title = "Take out the item",
+
+		Description = "",
+		Callback = function()
+			spawnboss()
+
+			local args = {
+				[1] = "Change",
+				[2] = Itembossspawn,
+				[3] = "Inv"
+			}
+
+			game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+		end
+	})
+
+
+	local SpawnBosss = Tabs.Event:AddToggle("SpawnBosss", {
+		Title = "Auto Spawn Boss", Default = _G.AutoBossspawn
+	})
+	SpawnBosss:OnChanged(function(S)
+		_G.AutoBossspawn = S
+		saveSettings()
+	end)
+
+
+	CF = CFrame.new(1214.41089, 16.1962242, 2433.36084, 0.347292185, -5.95517982e-08, -0.937756956, -1.70512315e-09, 1, -6.41359961e-08, 0.937756956, 2.38729214e-08, 0.347292185)
+
+	spawn(function()
+		while wait() do
+			if _G.AutoBossspawn then
+				pcall(function()
+					spawnboss()
+					for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+						if v.Name == NameBossspawn and v.Humanoid.Health > 0 then
+							_G.MT = false
+							repeat task.wait()
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,6,0) * CFrame.Angles(math.rad(-90),0,0)
+							until _G.AutoBossspawn == false
+						else
+							_G.MT = true
+							TP(CF)
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+	spawn(function()
+		while wait() do
+			if _G.AutoBossspawn then
+				pcall(function()
+					if _G.MT then
+						local player = game.Players.LocalPlayer
+						local backpack = player.Backpack
+						spawnboss()
+						for i, v in pairs(backpack:GetChildren()) do
+							if v.Name == Itembossspawn then
+								player.Character:WaitForChild("Humanoid"):EquipTool(v)
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+	spawn(function()
+		while wait() do
+			if _G.AutoBossspawn then
+				pcall(function()
+					if _G.MT then
+						for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+							if v.ClassName == "ProximityPrompt" then
+								fireproximityprompt(v,30)
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+
+	spawn(function()
+		while wait() do
+			if _G.AutoBossspawn then
+				pcall(function()
+					if _G.MT == false then
+						local player = game.Players.LocalPlayer
+						local backpack = player.Backpack
+
+						for i, v in pairs(backpack:GetChildren()) do
+							item()
+							if table.find(_G.it, v.Name) then
+								player.Character:WaitForChild("Humanoid"):EquipTool(v)
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+	------เน€เธกเธเธนเธซเธฅเธฑเธ
+
+	local Weaponlist = {}
+
+
+
+	local SelectWeapon = Tabs.Main:AddDropdown("SelectWeapon", {
+		Title = "Select Weapon",
+		Values = Weaponlist,
+		Multi = false,
+		Default = _G.Weaponnn,
+		Callback = function(selectedWeapon)
+			_G.Weaponnn = selectedWeapon
+			print("Selected " .. _G.Weaponnn)
+			saveSettings()
+		end
+	})
+
+	local function RefreshWeaponList()
+		Weaponlist = {}
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
+			if v:IsA("Tool") then
+				table.insert(Weaponlist ,v.Name)
+			end
+		end
+		for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do  
+			if v:IsA("Tool") then
+				table.insert(Weaponlist, v.Name)
+			end
+		end
+		SelectWeapon:SetValues(Weaponlist)
+	end
+
+	Tabs.Main:AddButton({
+		Title = "Refresh Weapon",
+		Description = "",
+		Callback = RefreshWeaponList
+	})
+
+	RefreshWeaponList()
+
+	local Toggleclick = Tabs.Main:AddToggle("Toggleclick", {Title = "Auto Attack", Default = _G.Attack  })
+	Toggleclick:OnChanged(function(lllkkkhh)
+		_G.Attack = lllkkkhh
+		saveSettings()
+	end)
+
+	spawn(function()
+		game:GetService("RunService").RenderStepped:Connect(function()
+			if _G.Attack then
+				pcall(function()
+					game:GetService('VirtualUser'):CaptureController()
+					game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
+				end)
+			end
+		end)
+	end)
+
+
+
+	---เน€เธกเธเธนEvent
+
+	local Quincy = Tabs.Event:AddToggle("Quincy", {Title = "Auto Orb Quincy", Default = _G.Quincy })
+	Quincy:OnChanged(function(aaa)
+		_G.Quincy = aaa
+		saveSettings()
+	end)
+
+
+
+	spawn(function()
+		while task.wait() do
+			if _G.Quincy then
+				pcall(function()
+					for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+						if v.Name == "Quincy Man" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 0 then
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.JumpPower = 0
+							repeat task.wait()
+								EquipWeapon(tostring(_G.Weaponnn))
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,7,0) * CFrame.Angles(math.rad(-90),0,0)
+							until not _G.Quincy or v.Humanoid.Health <= 0
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+
+	local Store = Tabs.Event:AddToggle("Store", {Title = "Auto Store Orb Quincy", Default = false })
+	Store:OnChanged(function(aaa)
+		_G.StoreOrb = aaa
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		while wait(1) do
+			if _G.StoreOrb then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Quincy",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+		end
+	end)
+
+
+
+
+
+
+
+	------เน€เธกเธเธนเธซเธฅเธฑเธ
+
+
+	local Monx = {
+		"Bacon XD",
+		"BaconHair",
+		"Bacon lvl.15",
+		"Bacon +Exp.2X",
+		"Bacon Fan",
+		"Boss King",
+		"Boss Snow",
+		"Bacon Buggy",
+		"Boss Bacon Buggy",
+		"Bacon curse",
+		"Bacon Snow",
+		"Bacon Elf",
+		"Bacon Santa",
+		"Crocodile",
+		"Bacon Blindfold",
+		"Bacon Real",
+		"Bacon angry",
+		"Skeleton",
+		"Bacon Candy",
+		"NineTailUser",
+		"Samurai V2",
+		"Isshiki",
+		"Dark T-Pose",
+		"Bacon Hollow",
+		"Bacon Red",
+		"Bacon Blue",
+		"Bacon Robux",
+		"Bacon T-Pose",
+		"Boss T-Pose",
+		"Bacon Magic",
+		"Bacon The Boss",
+		"Quincy Man",
+		"Bacon True",
+		"Shadow Monster",
+		"Bacon Smoke",
+		"Samurai"
+	}
+
+
+
+	local M = Tabs.Main:AddDropdown("M", {
+		Title = "Select Mon",
+		Values = Monx,
+		Multi = false,
+		Default = _G.Mob,
+		Callback = function(bbn)
+			_G.Mob = bbn
+			saveSettings()
+		end
+	})
+
+
+
+	local AutoFarm = Tabs.Main:AddToggle("AutoFarm", {Title = "Auto Farm", Default = _G.AutoFarm })
+	AutoFarm:OnChanged(function(aaa)
+		_G.AutoFarm = aaa
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		while task.wait() do
+			if _G.AutoFarm then
+				pcall(function()
+					for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+						if v.Name == _G.Mob and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 0 then
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.JumpPower = 0
+							repeat task.wait()
+								EquipWeapon(tostring(_G.Weaponnn))
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,7,0) * CFrame.Angles(math.rad(-90),0,0)
+							until not _G.AutoFarm or v.Humanoid.Health <= 0
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+
+
+
+	---เน€เธกเธเธน item
+
+
+	function OrbMon()
+		if _G.SelectOrb == "Shrek T Pose" then
+			MonZ = "Dark T-Pose"
+		elseif _G.SelectOrb == "Chair" then
+			MonZ = "Vergil Fake"
+		elseif _G.SelectOrb == "Orb Hollow" then
+			MonZ = "Bacon Hollow"
+		elseif _G.SelectOrb == "finger Sukuna" then
+			MonZ = "Bacon curse"
+		elseif _G.SelectOrb == "Candy" then
+			MonZ = "Bacon Elf"
+		elseif _G.SelectOrb == "Gift" then
+			MonZ = "Bacon Santa"
+		elseif _G.SelectOrb == "Gomu" then
+			MonZ = "Crocodile"
+		elseif _G.SelectOrb == "Bone" then
+			MonZ = "Skeleton"
+		elseif _G.SelectOrb == "Requiem" then
+			MonZ = "Bacon The Boss"
+		elseif _G.SelectOrb == "Sheath" then
+			MonZ = "Sam jetstream"
+		elseif _G.SelectOrb == "Litpon" then
+			MonZ = "Bacon Snow"
+		elseif _G.SelectOrb == "Orb Metal" then
+			MonZ = "Samurai"
+		elseif _G.SelectOrb == "Sandwhich" then
+			MonZ = "Bacon Smoke"
+		elseif _G.SelectOrb == "Orb Pink" then
+			MonZ = "Bacon tino"
+		elseif _G.SelectOrb == "Power Ice" then
+			MonZ = "Bacon True"
+		elseif _G.SelectOrb == "CubeRed" then
+			MonZ = "Isshiki"
+		elseif _G.SelectOrb == "Orb Yellow" then
+			MonZ = "Bacon enel"
+		elseif _G.SelectOrb == "Lightning" then
+			MonZ = "Bacon zeus"
+		elseif _G.SelectOrb == "Pochita" then
+			MonZ = "Pochita"
+		elseif _G.SelectOrb == "Angry birds" then
+			MonZ = "Bacon angry"
+		elseif _G.SelectOrb == "Donut" then
+			MonZ = "Bacon Candy"
+		elseif _G.SelectOrb == "Orb Evolution" then
+			MonZ = "Samurai V2"
+		elseif _G.SelectOrb == "Orb NineTail" then
+			MonZ = "NineTailUser"
+		elseif _G.SelectOrb == "Saddle Martinez" then
+			MonZ = "Bacon Martinez"
+		elseif _G.SelectOrb == "Scarf" then
+			MonZ = "Bacon Magic"
+		elseif _G.SelectOrb == "DarkPotara" then
+			MonZ = "Black"
+		elseif _G.SelectOrb == "Robux Red" then
+			MonZ = "Bacon Robux"
+		elseif _G.SelectOrb == "Orb Black" then
+			MonZ = "Bacon T-Pose"
+		elseif _G.SelectOrb == "Glove" then
+			MonZ = "Boss T-Pose"
+		end
+	end
+
+
+
+
+
+
+	local MaterialList = {
+		"Shrek T Pose", "Chair", "Orb Hollow", "finger Sukuna", "Candy", "Gift", "Gomu","Bone", "Requiem", "Sheath", "Litpon", "Orb Metal", "Sandwhich", "Orb Pink", "Power Ice", "CubeRed", "Orb Yellow", "Lightning", "Pochita","Angry birds", "Donut", "Orb Evolution", "Orb NineTail", "Saddle Martinez", "Scarf", "DarkPotara", "Robux Red", "Orb Black", "Glove"
+	} 
+
+
+	local DropdownMaterial = Tabs.item:AddDropdown("DropdownMaterial", {
+		Title = "Select Orb",
+		Values = MaterialList,
+		Multi = false,
+		Default = _G.SelectOrb,
+		Callback = function(op)
+			_G.SelectOrb = op
+			saveSettings()
+		end
+	})
+
+
+
+
+
+
+	Tabs.item:AddToggle("Auto item", {
+		Title = "Auto Farm Orb", 
+		Default = _G.AutoOrb, 
+		Callback = function(ZC)
+			_G.AutoOrb = ZC
+			saveSettings()
+		end
+	})
+
+
+	spawn(function()
+		while task.wait() do
+			OrbMon(SelectOrb)
+			if _G.AutoOrb then
+				pcall(function()
+					for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+						if v.Name == MonZ and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 0 then
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.JumpPower = 0
+							repeat task.wait()
+								EquipWeapon(tostring(_G.Weaponnn))
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+							until not _G.AutoOrb or v.Humanoid.Health <= 0
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+
+
+	--เน€เธกเธเธนเน€เธเนเธ Orb
+
+	local Obb = Tabs.item:AddToggle("Obb", {Title = "Auto Store Orb", Default = _G.KA  })
+	Obb:OnChanged(function(zxf)
+		_G.KA = zxf
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		while wait(.5) do
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Shrek",
+					[3] = "Backpack"
+				}
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Quincy",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Chair",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Hollow",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "fingerSukuna",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Candy",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Bone",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Requiem",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Sheath",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Litpon",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Metal",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Sandwhich",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Pink",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Power Ice",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "CubeRed",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Yellow",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Lightning",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Pochita",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Angry birds",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Donut",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Evolution",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb NineTail",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Gift",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Saddle Martinez",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Scarf",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "DarkPotara",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Robux Red",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Orb Black",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Glove",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+			if _G.KA then
+				local args = {
+					[1] = "Change",
+					[2] = "Gomu",
+					[3] = "Backpack"
+				}
+
+				game:GetService("ReplicatedStorage"):WaitForChild("Inventory"):FireServer(unpack(args))
+			end
+		end
+	end)
+
+
+
+	--เธฃเธงเธก function
+
+	function EquipWeapon(ToolSe)
+		if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+			Tool = game.Players.LocalPlayer.Backpack:WaitForChild(ToolSe)
+			wait(.1)
+			game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+		end
+	end
+
+
+
+	spawn(function()
+		pcall(function()
+			game:GetService("RunService").Stepped:Connect(function()
+				if _G.AutoFarm or _G.Quincy or _G.AutoBossspawn then
+					if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+						local Noclip = Instance.new("BodyVelocity")
+						Noclip.Name = "BodyClip"
+						Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+						Noclip.MaxForce = Vector3.new(100000,100000,100000)
+						Noclip.Velocity = Vector3.new(0,0,0)
+					end
+				else    
+					if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+						game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+					end
+				end
+			end)
+		end)
+	end)
+
+
+
+	function TP(CFrame)
+		pcall(function()
+			game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame
+		end)
+	end
+
+
+	---------------
+
+
+	---เน€เธกเธเธนDungeon
+
+	local Dungeon = Tabs.Dungeon:AddToggle("Dungeon", {Title = "Auto Enter Dungeon", Default = _G.Dungeon })
+	Dungeon:OnChanged(function(mklir)
+		_G.Dungeon = mklir
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.Dungeon then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(111.865456, 16.9902515, 129.566284, 0.992044687, 3.60898085e-08, 0.125886396, -3.57432981e-08, 1, -5.01135133e-09, -0.125886396, 4.71889583e-10, 0.992044687)
+
+				end
+			end
+		end)
+	end)
+
+
+
+
+	---เน€เธกเธเธนเธเธฅเธดเนเธเน€เธฅเน€เธงเธฅ เธเธฅเธดเธเธ•เธฑเธ
+
+
+
+	local Belix8 = Tabs.Main:AddToggle("Belix8", {Title = "Click to Belix8 [AFK]", Default = _G.Belix8 })
+	Belix8:OnChanged(function(HKK)
+		_G.Belix8 = HKK
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.Belix8 then
+					fireclickdetector(game:GetService("Workspace")["Click to Belix8 [AFK]"].HumanoidRootPart.ClickDetector)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4774.6377, 48349.1602, 3166.73145, -0.631904721, 1.10530625e-08, -0.775046051, 1.61701816e-08, 1, 1.07741815e-09, 0.775046051, -1.18518093e-08, -0.631904721)
+				end
+			end
+		end)
+	end)
+
+
+
+
+	local Expx10 = Tabs.Main:AddToggle("Expx10", {Title = "Click to Expx10 [AFK]", Default = _G.Expx10  })
+	Expx10:OnChanged(function(ZA)
+		_G.Expx10 = ZA
+		saveSettings()
+	end)
+
+
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.Expx10 then
+					fireclickdetector(game:GetService("Workspace")["Click to Expx10 [AFK]"].HumanoidRootPart.ClickDetector)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4774.6377, 48349.1602, 3166.73145, -0.631904721, 1.10530625e-08, -0.775046051, 1.61701816e-08, 1, 1.07741815e-09, 0.775046051, -1.18518093e-08, -0.631904721)
+				end
+			end
+		end)
+	end)
+
+
+
+	---เน€เธกเธเธนSHOP
+
+
+	Tabs.Shop:AddButton({
+		Title = "Sword Dual KatanV2",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-450.459991, 7.63812256, 622.533569, -0.999723315, 0, 0.0235256162, 0, 1.00000012, -0, -0.0235256162, 0, -0.999723315)
+		end
+	})
+
+
+
+
+	Tabs.Shop:AddButton({
+		Title = "Tripple Yoru",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-282.409882, 7.63812256, 771.575684, -0.0193383414, 0, 0.999812961, 0, 1.00000012, -0, -0.99981308, 0, -0.0193383396)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Muramasa",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(986.103333, 4.96611595, 24.6258488, 0.414074004, 0, -0.910243213, -0, 1.00000012, -0, 0.910243332, 0, 0.414073944)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Tripple Katana",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(546.257202, 8.03216457, 1250.849, -0.997083008, -4.90135896e-08, -0.0763249993, -4.32542322e-08, 1, -7.71114657e-08, 0.0763249993, -7.35851486e-08, -0.997083008)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Sword Emma",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(91.0308838, 68.8286133, -454.301575, 0.703967929, 0, -0.710231781, -0, 1, -0, 0.710231841, 0, 0.703967869)
+		end
+	})
+
+	Tabs.Shop:AddButton({
+		Title = "MiniYoru",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(108.630081, 38.5150719, -421.649414, -0.329450607, 0, -0.94417274, 0, 0.99999994, -0, 0.944172859, -0, -0.329450577)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Natsu",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(19.9246902, 14.3270569, -608.438904, -0.259627134, 0, 0.965708911, 0, 1.00000012, -0, -0.965709031, 0, -0.259627104)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Shrek",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(303.160309, 14.2326088, -675.380432, 0.572463632, 0, -0.819930136, -0, 1, -0, 0.819930136, 0, 0.572463632)
+		end
+	})
+
+
+
+	Tabs.Shop:AddButton({
+		Title = "Hollow",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(316.165833, 19.3096638, -665.465027, 0.482068568, 0, -0.876133561, -0, 1.00000012, -0, 0.876133561, 0, 0.482068568)
+		end
+	})
+
+
+
+	Tabs.Shop:AddButton({
+		Title = "Shop",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(299.075165, 19.7096634, -353.720642, 0.636892736, 0, -0.770952463, -0, 1, -0, 0.770952463, 0, 0.636892736)
+		end
+	})
+
+
+	Tabs.Shop:AddButton({
+		Title = "Katakuri",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-485.710388, 48.1222687, -125.176277, 0.52973628, 2.90972952e-08, 0.848162413, 7.79900944e-09, 1, -3.91772979e-08, -0.848162413, 2.73684631e-08, 0.52973628)
+		end
+	})
+
+
+
+	Tabs.Shop:AddButton({
+		Title = "Sabo",
+		Description = "",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-477.797424, 48.1222687, -134.488037, 0.963943899, 1.03260467e-09, 0.266105503, -7.6802853e-10, 1, -1.09831699e-09, -0.266105503, 8.54339377e-10, 0.963943899)
+		end
+	})
+
+
+	local Z = Tabs.Main:AddToggle("Z", {Title = "Z", Default = _G.Z })
+	Z:OnChanged(function(mbbb)
+		_G.Z = mbbb
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.Z then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+				end
+			end
+		end)
+	end)
+
+
+	local X = Tabs.Main:AddToggle("X", {Title = "X", Default = _G.X })
+	X:OnChanged(function(mbbgb)
+		_G.X = mbbgb
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.X then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+				end
+			end
+		end)
+	end)
+
+
+
+	local C = Tabs.Main:AddToggle("C", {Title = "C", Default = _G.C })
+	C:OnChanged(function(mbbgllb)
+		_G.C = mbbgllb
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.C then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
+				end
+			end
+		end)
+	end)
+
+	local V = Tabs.Main:AddToggle("V", {Title = "V", Default = _G.V })
+	V:OnChanged(function(mbbgllob)
+		_G.V = mbbgllob
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.V then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
+
+				end
+			end
+		end)
+	end)
+
+
+
+
+	Tabs.Settings:AddToggle("Aut", {
+		Title = "AFK",
+		Default = true,
+		Callback = function(mml)
+			_G.AntiAFKEnabled = mml
+			local vu = game:GetService("VirtualUser")
+			game.Players.LocalPlayer.Idled:connect(function()
+				if _G.AntiAFKEnabled then
+					vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+					wait(1)
+					vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+				end
+			end)
+		end
+	})
+
+
+
+
+	-- Addons:
+
+	-- SaveManager (Allows you to have a configuration system)
+
+	-- InterfaceManager (Allows you to have a interface managment system)
+	InterfaceManager:SetLibrary(Fluent)
+	-- use case for doing it this way:
+	-- a script hub could have themes in a global folder
+	-- and game configs in a separate folder per game
+	InterfaceManager:SetFolder("ZA_HUB")
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "ZAHUB",
+		Content = "ZAHUB VIP SCRIPT.",
+		Duration = 8
+	})
+
+end
+
+
+
+-- Rock Fruit World2
+
+if RFMain2 then
+
+
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	-- เธชเธฃเนเธฒเธ GUI Window
+	local Window = Fluent:CreateWindow({
+		Title = "Rock Fruit Premium Script",
+		SubTitle = "By.ZA HUB ",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(520, 320),
+		Acrylic = false, 
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.RightControl
+	})
+
+
+	do
+		Client = game.Players.LocalPlayer
+		Char = Client and Client.Character
+		Root = Char and Char.HumanoidRootPart
+	end
+
+	dist = function(a, b, noHeight)
+		if not b then
+			b = Root.Position
+		end
+		return (Vector3.new(a.X, not noHeight and a.Y, a.Z) - Vector3.new(b.X, not noHeight and b.Y, b.Z)).magnitude
+	end
+
+
+
+	local ScreenGui1 = Instance.new("ScreenGui")
+	local ImageButton1 = Instance.new("ImageButton")
+	local UICorner = Instance.new("UICorner")
+
+	ScreenGui1.Name = "ImageButton"
+	ScreenGui1.Parent = game.CoreGui
+	ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageButton1.Parent = ScreenGui1
+	ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+	ImageButton1.BorderSizePixel = 0
+	ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton1.Draggable = true
+	ImageButton1.Image = "rbxassetid://17104270399"
+	ImageButton1.MouseButton1Down:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+	end)
+	UICorner.Parent = ImageButton1
+
+
+	do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+			_G.Color = Color3.fromRGB(230, 5, 12)
+		end 
+	end
+
+
+
+	-- เธชเธฃเนเธฒเธเนเธ—เนเธเธ—เธฑเนเธเธซเธกเธ”
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+		Webhook = Window:AddTab({ Title = "Webhook", Icon = "mail-plus" }),
+		item = Window:AddTab({ Title = "Farm item", Icon = "boxes" }),
+		Event = Window:AddTab({
+			Title = "Event", Icon = "backpack"
+		}),
+		Shop = Window:AddTab({ Title = "SHOP", Icon = "shopping-cart" }),
+		Dungeon = Window:AddTab({ Title = "Dungeon", Icon = "swords" }),
+		Settings = Window:AddTab({ Title = "Configs", Icon = "settings" })
+	}
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+
+
+
+
+	---เน€เธกเธเธน เธ”เธนเน€เธงเธฅเธฒ
+	local function formatTime(hours, minutes, seconds)
+		return string.format("%02d:%02d:%02d", hours, minutes, seconds)
+	end
+
+	local timerParagraph = Tabs.Main:AddParagraph({
+		Title = "Timer",
+		Content = ""
+	})
+
+	local function updateTimerDisplay()
+		local startTime = os.time()
+		while true do
+			local elapsedTime = os.time() - startTime
+			local hours = math.floor(elapsedTime / 3600)
+			local minutes = math.floor((elapsedTime % 3600) / 60)
+			local seconds = elapsedTime % 60
+
+			timerParagraph:SetDesc(formatTime(hours, minutes, seconds))
+			wait(1)
+		end
+	end
+
+	spawn(updateTimerDisplay)
+
+	--เน€เธกเธเธน Webhook
+
+	Tabs.Webhook:AddInput("Input", {
+		Title = "Webhook Item",
+		Default = "Webhook",
+		Placeholder = "nil",
+		Numeric = false, -- Only allows numbers
+		Finished = false, -- Only calls callback when you press enter
+		Callback = function(gay)
+			_G.Webhook = gay
+		end
+	})
+
+
+	local HttpService = game:GetService("HttpService")
+	local MarketplaceService = game:GetService("MarketplaceService")
+	local Players = game:GetService("Players")
+
+	local DName = Players.LocalPlayer.DisplayName
+	local GameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+
+	local requestfunc = syn and syn.request or request or http_request or http.request or fluxus and fluxus.request or game.HttpGet
+
+	local function sendNotification(toolName)
+		local req = requestfunc({
+			Url = _G.Webhook,
+			Method = 'POST',
+			Headers = {
+				['Content-Type'] = 'application/json'
+			},
+			Body = HttpService:JSONEncode({
+				["content"] = "<:notify:1228703986354491452> Rock Ftuit",
+				["embeds"] = {{
+					["title"] = "<:user:1228703738642960525> User : ||" .. DName .. "(@" .. Players.LocalPlayer.Name .. ")||",
+					["color"] = tonumber("0xFF0000"),
+					["description"] = "## You have received the item" ..
+						"\n <:joystick:946962437712797737>  Game : " .. GameName .. "\n  <:spirit:1228703937595441284>  Items: " ..
+						(toolName ..  " +1"),
+					["image"] = {
+						["url"] = "https://media.discordapp.net/attachments/1219347788610015423/1228689155735818320/standard.gif?ex=662cf4f2&is=661a7ff2&hm=1fd77da2d83164f76ce0d988a55d8e797e37db27caea54f6490654fd83bd3988&"
+					}
+				}}
+			})
+		})
+	end
+
+	local backpack = Players.LocalPlayer.Backpack
+
+	local function onChildAdded(child)
+		if child:IsA("Tool") then
+			local toolName = child.Name
+			sendNotification(toolName)
+		end
+	end
+
+	backpack.ChildAdded:Connect(onChildAdded)
+
+	---เน€เธกเธเธน Event
+	Tabs.Event:AddParagraph({
+
+		Title = "Wait Update",
+
+		Content = "Wait Update"
+	})
+
+
+	---- เน€เธกเธเธน Item
+
+	Tabs.item:AddParagraph({
+
+		Title = "Wait Update",
+
+		Content = "Wait Update"
+	})
+
+
+	---- เน€เธกเธเธน Dungeon
+
+
+	Tabs.Dungeon:AddParagraph({
+
+		Title = "Wait Update",
+
+		Content = "Wait Update"
+	})
+
+
+	------เน€เธกเธเธนเธซเธฅเธฑเธ
+
+	local Weaponlist = {}
+
+
+
+	local SelectWeapon = Tabs.Main:AddDropdown("SelectWeapon", {
+		Title = "Select Weapon",
+		Values = Weaponlist,
+		Multi = false,
+		Default = _G.Weaponnnc,
+		Callback = function(selectedWeapon)
+			_G.Weaponnnc = selectedWeapon
+			print("Selected " .. _G.Weaponnnc)
+			saveSettings()
+		end
+	})
+
+	local function RefreshWeaponList()
+		Weaponlist = {}
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
+			if v:IsA("Tool") then
+				table.insert(Weaponlist ,v.Name)
+			end
+		end
+		for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do  
+			if v:IsA("Tool") then
+				table.insert(Weaponlist, v.Name)
+			end
+		end
+		SelectWeapon:SetValues(Weaponlist)
+	end
+
+	Tabs.Main:AddButton({
+		Title = "Refresh Weapon",
+		Description = "",
+		Callback = RefreshWeaponList
+	})
+
+	RefreshWeaponList()
+
+	local Toggleclick = Tabs.Main:AddToggle("Toggleclick", {Title = "Auto Attack", Default = _G.Attack })
+	Toggleclick:OnChanged(function(lllkkkhh)
+		_G.Attack = lllkkkhh
+		saveSettings()
+	end)
+
+	spawn(function()
+		game:GetService("RunService").RenderStepped:Connect(function()
+			if _G.Attack then
+				pcall(function()
+					game:GetService('VirtualUser'):CaptureController()
+					game:GetService('VirtualUser'):Button1Down(Vector2.new(1280, 672))
+				end)
+			end
+		end)
+	end)
+
+
+	local Monzx = {
+		"Bacon Drip",
+		"Yamcha",
+		"Piccolo",
+		"Krillin",
+		"Jotaro",
+		"Dio",
+		"Forg Man",
+		"Shark Man",
+		"Mushroom",
+		"Jiren",
+		"Dragon Warrior",
+		"Goku Blue",
+		"Vegeta Blue",
+		"Bacon Fire",
+		"Deku",
+		"Shark Real",
+		"Pirate Curse",
+		"Akaza",
+		"Lower Demon",
+		"Kizaru",
+		"MarineV2",
+		"Bacon warrior",
+		"Shadow Angel",
+		"Vegeta Base",
+		"Broly Base",
+		"Boss Black",
+		"Black",
+		"Pirate",
+		"Shanks",
+		"Bacon Cape",
+		"Boss Sans",
+		"Skeleton",
+		"MarineV5",
+		"Fujitora",
+		"Devil",
+		"Dante",
+		"Marine",
+		"Akainu",
+		"Ace",
+		"ICE",
+		"Boss ICE",
+		"Sasuke Clone",
+		"Sasuke",
+		"Bacon Lightning",
+		"Dark Alien"
+	}
+
+
+	local M = Tabs.Main:AddDropdown("M", {
+		Title = "Select Mon",
+		Values = Monzx,
+		Multi = false,
+		Default = _G.Mobx,
+		Callback = function(bbn)
+			_G.Mobx = bbn
+			saveSettings()
+		end
+	})
+
+
+
+	local AutoFarm = Tabs.Main:AddToggle("AutoFarm", {Title = "Auto Farm", Default = false })
+	AutoFarm:OnChanged(function(aaa)
+		_G.Auto_Farm = aaa
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		while task.wait() do
+			if _G.Auto_Farm then
+				pcall(function()
+					for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+						if v.Name == _G.Mobx and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health >= 0 then
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.JumpPower = 0
+							repeat task.wait()
+								EquipWeapon(tostring(_G.Weaponnnc))
+								game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+							until not _G.Auto_Farm or v.Humanoid.Health <= 0
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+
+
+
+	--เธฃเธงเธก function
+
+	function EquipWeapon(ToolSe)
+		if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+			Tool = game.Players.LocalPlayer.Backpack:WaitForChild(ToolSe)
+			wait(.1)
+			game.Players.LocalPlayer.Character.Humanoid:EquipTool(Tool)
+		end
+	end
+
+
+
+	spawn(function()
+		pcall(function()
+			game:GetService("RunService").Stepped:Connect(function()
+				if _G.Auto_Farm then
+					if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+						local Noclip = Instance.new("BodyVelocity")
+						Noclip.Name = "BodyClip"
+						Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+						Noclip.MaxForce = Vector3.new(100000,100000,100000)
+						Noclip.Velocity = Vector3.new(0,0,0)
+					end
+				else    
+					if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+						game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+					end
+				end
+			end)
+		end)
+	end)
+
+
+
+	function TP(CFrame)
+		pcall(function()
+			game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = CFrame
+		end)
+	end
+
+
+	---เน€เธกเธเธน Shop
+
+	SHOPC = {
+		"GOJO",
+		"DARK V2",
+		"Black Scythe",
+		"Death Scythe",
+		"SCP O96",
+		"Rimuru V1"
+	}
+
+
+	local DropdownMaterial = Tabs.Shop:AddDropdown("DropdownMaterial", {
+		Title = "Select SHOP",
+		Values = SHOPC,
+		Multi = false,
+		Default = _G.SelectShop,
+		Callback = function(opz)
+			_G.SelectShop = opz
+			saveSettings()
+		end
+	})
+
+
+	local ToggShop = Tabs.Shop:AddToggle("ToggShop", {Title = "Teleport SHOP", Default = _G.TPSHOP })
+	ToggShop:OnChanged(function(plo)
+		_G.TPSHOP = plo
+		saveSettings()
+	end)
+
+
+
+	spawn(function()
+		while wait() do
+			if _G.TPSHOP then
+				if _G.SelectShop == "Rimuru V1" then
+					TP(CFrame.new(-893.345398, 12.7028484, -2463.59253, 0.173293129, 0, -0.984870374, -0, 1.00000012, -0, 0.984870374, 0, 0.173293129))
+				end
+				if _G.SelectShop == "SCP O96" then
+					TP(CFrame.new(747.08551, 11387.8857, 964.881042, 0.549574554, 0, -0.835444748, -0, 1.00000012, -0, 0.835444748, 0, 0.549574554))
+				end
+				if _G.SelectShop == "GOJO" then
+					TP(CFrame.new(-458.162872, 60.41819, 879.733093, -0.212765351, 0, 0.977103233, 0, 0.99999994, -0, -0.977103353, 0, -0.212765321))
+				end
+				if _G.SelectShop == "DARK V2" then
+					TP(CFrame.new(-451.565063, 60.4177589, 865.687073, 0.668446362, 0, 0.743760347, 0, 1, -0, -0.743760347, 0, 0.668446362))
+				end
+				if _G.SelectShop == "Black Scythe" then
+					TP(CFrame.new(-443.730225, 60.419899, 891.797546, -0.947577834, 0, 0.319525063, 0, 1, -0, -0.319525063, 0, -0.947577834))
+				end
+				if _G.SelectShop == "Death Scythe" then
+					TP(CFrame.new(-609.707886, 37.1476669, 2259.11035, -0.716750801, 3.66355941e-08, 0.697329402, -1.3987723e-08, 1, -6.69142963e-08, -0.697329402, -5.77149244e-08, -0.716750801))
+
+				end
+			end
+		end
+	end)
+
+
+	---เน€เธกเธเธน configs
+
+	Tabs.Settings:AddToggle("Aut", {
+		Title = "AFK",
+		Default = true,
+		Callback = function(mml)
+			_G.AntiAFKEnabled = mml
+			local vu = game:GetService("VirtualUser")
+			game.Players.LocalPlayer.Idled:connect(function()
+				if _G.AntiAFKEnabled then
+					vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+					wait(1)
+					vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+				end
+			end)
+		end
+	})
+
+
+	local Z = Tabs.Main:AddToggle("Z", {Title = "Z", Default = _G.Z })
+	Z:OnChanged(function(mbbb)
+		_G.Z = mbbb
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.Z then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+				end
+			end
+		end)
+	end)
+
+
+	local X = Tabs.Main:AddToggle("X", {Title = "X", Default = _G.X })
+	X:OnChanged(function(mbbgb)
+		_G.X = mbbgb
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.X then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+				end
+			end
+		end)
+	end)
+
+
+
+	local C = Tabs.Main:AddToggle("C", {Title = "C", Default = _G.C })
+	C:OnChanged(function(mbbgllb)
+		_G.C = mbbgllb
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.C then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "C", false, game)
+				end
+			end
+		end)
+	end)
+
+	local V = Tabs.Main:AddToggle("V", {Title = "V", Default = _G.V })
+	V:OnChanged(function(mbbgllob)
+		_G.V = mbbgllob
+		saveSettings()
+	end)
+
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.V then
+					game:service('VirtualInputManager'):SendKeyEvent(true, "V", false, game)
+
+				end
+			end
+		end)
+	end)
+
+
+
+
+	-- Addons:
+
+	-- SaveManager (Allows you to have a configuration system)
+
+	-- InterfaceManager (Allows you to have a interface managment system)
+	InterfaceManager:SetLibrary(Fluent)
+	-- use case for doing it this way:
+	-- a script hub could have themes in a global folder
+	-- and game configs in a separate folder per game
+	InterfaceManager:SetFolder("ZA_HUB")
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "ZAHUB",
+		Content = "ZAHUB VIP SCRIPT.",
+		Duration = 8
+	})
+
+
+end
+
+
+--Rock Dungeon
+
+if RFDungeon then
+
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	-- เธชเธฃเนเธฒเธ GUI Window
+	local Window = Fluent:CreateWindow({
+		Title = "Rock Fruit Premium Script",
+		SubTitle = "By.ZA HUB ",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(520, 320),
+		Acrylic = false, 
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.RightControl
+	})
+
+
+	do
+		Client = game.Players.LocalPlayer
+		Char = Client and Client.Character
+		Root = Char and Char.HumanoidRootPart
+	end
+
+	dist = function(a, b, noHeight)
+		if not b then
+			b = Root.Position
+		end
+		return (Vector3.new(a.X, not noHeight and a.Y, a.Z) - Vector3.new(b.X, not noHeight and b.Y, b.Z)).magnitude
+	end
+
+
+
+	local ScreenGui1 = Instance.new("ScreenGui")
+	local ImageButton1 = Instance.new("ImageButton")
+	local UICorner = Instance.new("UICorner")
+
+	ScreenGui1.Name = "ImageButton"
+	ScreenGui1.Parent = game.CoreGui
+	ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageButton1.Parent = ScreenGui1
+	ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+	ImageButton1.BorderSizePixel = 0
+	ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton1.Draggable = true
+	ImageButton1.Image = "rbxassetid://17104270399"
+	ImageButton1.MouseButton1Down:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+	end)
+	UICorner.Parent = ImageButton1
+
+
+	do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+			_G.Color = Color3.fromRGB(230, 5, 12)
+		end 
+	end
+
+
+
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Dungeon", Icon = "swords" }),
+		Configs = Window:AddTab({ Title = "Configs", Icon = "settings" })
+	}
+
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+
+
+
+
+	---เน€เธกเธเธน เธ”เธนเน€เธงเธฅเธฒ
+	local function formatTime(hours, minutes, seconds)
+		return string.format("%02d:%02d:%02d", hours, minutes, seconds)
+	end
+
+	local timerParagraph = Tabs.Main:AddParagraph({
+		Title = "Timer",
+		Content = ""
+	})
+
+	local function updateTimerDisplay()
+		local startTime = os.time()
+		while true do
+			local elapsedTime = os.time() - startTime
+			local hours = math.floor(elapsedTime / 3600)
+			local minutes = math.floor((elapsedTime % 3600) / 60)
+			local seconds = elapsedTime % 60
+
+			timerParagraph:SetDesc(formatTime(hours, minutes, seconds))
+			wait(1)
+		end
+	end
+
+	spawn(updateTimerDisplay)
+
+
+
+
+
+
+	local Raid = Tabs.Main:AddToggle("Raid", {Title = "Auto Dungeon", Default = _G.KillAura })
+
+	Raid:OnChanged(function(MVP)
+		_G.KillAura = MVP
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while wait() do
+				if _G.KillAura then
+					local mobs = game.Workspace.MOB:GetChildren()
+
+					for _, mob in pairs(mobs) do
+						if mob:IsA("Model") and mob:FindFirstChild("Humanoid") then
+							local humanoid = mob:FindFirstChildOfClass("Humanoid")
+							humanoid.Health = -math.huge
+							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(87.5658646, 54.8656464, -300.244995, -0.998095214, -7.71736008e-09, 0.0616921671, -7.8486222e-09, 1, -1.88536298e-09, -0.0616921671, -2.36597031e-09, -0.998095214)
+						end
+					end
+				end
+				wait(0.1)
+			end
+		end)
+	end)
+
+
+
+
+
+
+	-- Addons:
+
+	-- SaveManager (Allows you to have a configuration system)
+
+	-- InterfaceManager (Allows you to have a interface managment system)
+	InterfaceManager:SetLibrary(Fluent)
+	-- use case for doing it this way:
+	-- a script hub could have themes in a global folder
+	-- and game configs in a separate folder per game
+	InterfaceManager:SetFolder("ZA_HUB")
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "ZAHUB",
+		Content = "ZAHUB VIP SCRIPT.",
+		Duration = 8
+	})
+end
+
+
+--Cursed Arena
+
+if CAMain then
+
+	local startTime = os.time() -- Record the starting time
+
+	print('Game Loading: Cursed Arena - Main Game')
+
+	repeat 
+		task.wait() 
+	until game:IsLoaded()
+
+	local endTime = os.time() -- Record the ending time
+	local elapsedTime = endTime - startTime -- Calculate elapsed time
+
+	print('Game Loaded: ' .. elapsedTime .. ' seconds')
+	print('Game Finished Loading')
+
+	-- Load UI
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	local Window = Fluent:CreateWindow({
+		Title = "Cursed Arena",
+		SubTitle = "by ZA HUB",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(580, 340),
+		Acrylic = true,
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.RightControl 
+	})
+
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+		Emote = Window:AddTab({ Title = "Emote", Icon = "smile-plus" }),
+		Troll = Window:AddTab({ Title = "Troll", Icon = "flame" }),
+		Player = Window:AddTab({ Title = "Player", Icon = "baby" }),
+		Settings = Window:AddTab({ Title = "Theme", Icon = "settings" })
+	}
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+	Tabs.Main:AddParagraph({
+
+		Title = "Boss Farming",
+
+		Content = "Use for auto farming the boss, it will kill boss when you deal 10% damage"
+	})
+
+	local ToggleBoss = Tabs.Main:AddToggle("ToggleBoss", {Title = "Auto Farm Boss", Default = _G.AutoBoss })
+	ToggleBoss:OnChanged(function(tgbtq)
+		_G.AutoBoss = tgbtq
+		saveSettings()
+	end)
+
+	local BossFile = {
+		"BOSS"
+	}
+
+
+	function Attack()
+		local args = {
+			[1] = "AttackHandler",
+			[2] = "Punch",
+			[3] = {
+				[1] = false,
+				[2] = false
+			}
+		}
+
+		game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+
+	end
+
+	spawn(function()
+		while true do 
+			wait()
+			if _G.AutoBoss then
+				local boss = nil
+				for _, v in pairs(game.Workspace:GetDescendants()) do
+					if table.find(BossFile, v.Name) then
+						boss = v
+						break
+					end
+				end
+				if boss and boss:FindFirstChild("Humanoid") and boss.Humanoid.Health > 0 then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = boss.HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+					repeat
+						wait()
+						if not _G.AutoBoss or boss.Humanoid.Health <= 0 then
+							break
+						end
+						if game.Players.LocalPlayer.Character then
+							boss.HumanoidRootPart.Transparency = 0.9
+							boss.Humanoid.WalkSpeed = 0
+							boss.Humanoid.JumpPower = 0
+							boss.HumanoidRootPart.CanCollide = false
+							boss.Head.CanCollide = false
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = boss.HumanoidRootPart.CFrame * CFrame.new(0, 0, 3)
+							Attack()
+
+							-- Check if boss health is below 90% and instantly kill it
+							if boss.Humanoid.Health / boss.Humanoid.MaxHealth <= 0.99 then
+								boss.Humanoid.Health = -math.huge
+								sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+							end
+						end
+					until not _G.AutoBoss or boss.Humanoid.Health <= 0
+				else
+					-- No need for any action here, the loop will continue automatically
+				end
+			end
+		end
+	end)
+
+
+	Tabs.Main:AddParagraph({
+
+		Title = "Domain Expansion",
+
+		Content = "Recommended Super Clash for Public server"
+	})
+
+	local ModeList = {
+		"Normal Clash Mode",
+		"Super Clash Mode",
+		"AI Clash Mode"
+	}
+
+	local SelectMode = Tabs.Main:AddDropdown("SelectMode", {
+		Title = "Domain Clashing Mode",
+		Values = ModeList,
+		Multi = false,
+		Default = _G.DCMode,
+		Callback = function(selectedMode)
+			_G.DCMode = selectedMode
+			saveSettings()
+			Fluent:Notify({
+				Title = "Mode Selected",
+				Content = "You have selected " .. _G.DCMode,
+				Duration = 4
+			})
+		end
+	})
+
+	local keyone = nil
+	local keytwo = nil
+	local keythree = nil
+	local keyfour = nil
+
+	local function PressKey(key)
+		game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode[key], false, game)
+	end
+
+	local ToggleClash = Tabs.Main:AddToggle("ToggleClash", {Title = "Auto Domain Clash", Default = _G.AutoClash })
+	ToggleClash:OnChanged(function(tgdc)
+		_G.AutoClash = tgdc
+		saveSettings()
+	end)
+
+	spawn(function()
+		while true do 
+			wait()
+			if _G.AutoClash and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Clash") and game:GetService("Players").LocalPlayer.PlayerGui.Clash.Enabled then
+				if _G.DCMode == "Normal Clash Mode" and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Clash") and game:GetService("Players").LocalPlayer.PlayerGui.Clash.Enabled then 
+					wait(0.2)
+					local keyone = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["1"].Back.Key.Text
+					wait(0.2)
+					local keytwo = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["2"].Back.Key.Text
+					wait(0.2)
+					local keythree = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["3"].Back.Key.Text
+					wait(0.2)
+					local keyfour = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["4"].Back.Key.Text
+
+					PressKey(keyone)
+					wait(0.2)
+					PressKey(keytwo)
+					wait(0.1)
+					PressKey(keythree)
+					wait(0.3)
+					PressKey(keyfour)
+					wait(0.3)
+				elseif _G.DCMode == "AI Clash Mode" and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Clash") and game:GetService("Players").LocalPlayer.PlayerGui.Clash.Enabled then 
+					wait(0.2)
+					local keyone = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["1"].Back.Key.Text
+					wait(0.2)
+					local keytwo = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["2"].Back.Key.Text
+					wait(0.2)
+					local keythree = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["3"].Back.Key.Text
+					wait(0.2)
+					local keyfour = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["4"].Back.Key.Text
+
+					local function AiPress(key)
+						if math.random() <= 0.75 then
+							PressKey(key)
+						else
+							local randomKey = math.random(1, 4)
+							if randomKey == 1 then
+								PressKey("W")
+							elseif randomKey == 2 then
+								PressKey("A")
+							elseif randomKey == 3 then
+								PressKey("S")
+							elseif randomKey == 4 then
+								PressKey("D")
+							end
+						end
+					end
+
+					AiPress(keyone)
+					wait(0.2)
+					AiPress(keytwo)
+					wait(0.3)
+					AiPress(keythree)
+					wait(0.3)
+					AiPress(keyfour)
+					wait(0.2)
+				elseif _G.DCMode == "Super Clash Mode" and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Clash") and game:GetService("Players").LocalPlayer.PlayerGui.Clash.Enabled then 
+					wait()
+					local keyone = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["1"].Back.Key.Text
+					wait()
+					local keytwo = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["2"].Back.Key.Text
+					wait()
+					local keythree = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["3"].Back.Key.Text
+					wait()
+					local keyfour = game:GetService("Players").LocalPlayer.PlayerGui.Clash.Holder.Hotbar["4"].Back.Key.Text
+
+					PressKey(keyone)
+					wait()
+					PressKey(keytwo)
+					wait()
+					PressKey(keythree)
+					wait()
+					PressKey(keyfour)
+					wait()
+				end
+			end
+		end
+	end)
+
+	Tabs.Main:AddButton({
+		Title = "Break Domain",
+		Description = "Use this if you're trapped in someone domain",
+		Callback = function()
+			local args = {
+				[1] = "TojiHandler",
+				[2] = "Barrage",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	local playerr = Tabs.Player:AddParagraph({
+
+		Title = "Check Player", -- Title > SetTitle
+
+		Content = "Status: "   --Content > SetDesc
+	})
+
+	spawn(function()
+		while wait() do
+			pcall(function()
+				if game:GetService("Players"):FindFirstChild(_G.SelectPly) then
+					playerr:SetTitle("Player : "..(game.Players[_G.SelectPly].Name))
+					playerr:SetDesc("Health : "..(game.Players[_G.SelectPly].Character.Humanoid.Health).." / "..(game.Players[_G.SelectPly].Character.Humanoid.MaxHealth))
+				else
+					playerr:SetTitle("Please Select Player")
+					playerr:SetDesc("Vui long cho 1 tach ca phe")
+				end
+			end)
+		end
+	end)
+
+
+
+	Playerslist = {"Unselected"}
+
+	for i,v in pairs(game:GetService("Players"):GetChildren()) do
+		table.insert(Playerslist,v.Name)
+	end
+
+	local SelectedPly = Tabs.Player:AddDropdown("Select player", {
+		Title = "Select Player",
+		Values = Playerslist,
+		Multi = false,
+		Default = 1,
+		Callback = function(v)
+			_G.SelectPly = v
+		end
+	})
+
+	local function RefreshPlayerList()
+		Playerslist = {"Unselected"}
+		for i,v in pairs(game:GetService("Players"):GetChildren()) do
+			table.insert(Playerslist,v.Name)
+		end
+		SelectedPly:SetValues(Playerslist)
+	end
+
+	Tabs.Player:AddButton({
+		Title = "Refresh Player List",
+		Description = "",
+		Callback = RefreshPlayerList
+	})
+
+	RefreshPlayerList()
+
+	Tabs.Player:AddToggle("ViewPlayer", {
+		Title = "Spectate Player",
+		Description = "Spectate", 
+		Default = false, 
+		Callback = function(S) 
+			SpectatePlys = S
+			local plr1 = game:GetService("Players").LocalPlayer.Character.Humanoid
+			local plr2 = game:GetService("Players"):FindFirstChild(_G.SelectPly)
+			repeat wait(.1)
+				game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players"):FindFirstChild(_G.SelectPly).Character.Humanoid
+			until SpectatePlys == false 
+			game:GetService("Workspace").Camera.CameraSubject = game:GetService("Players").LocalPlayer.Character.Humanoid
+		end 
+	}) 
+
+	Tabs.Player:AddButton({
+		Title = "Teleport",
+		Callback = function()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame
+		end
+	})
+
+
+	-- Emotes
+
+	Tabs.Emote:AddParagraph({
+
+		Title = "Emote Player",
+
+		Content = "Select Emote you need and press Play"
+	})
+
+	local EmoteList = {
+		"sleepy",
+		"in paradise",
+		"Playtime",
+		"carson",
+		"blueberry",
+		"come on",
+		"CrazyDance",
+		"dosey",
+		"feel drunk",
+		"BestoFriendo",
+		"headspin",
+		"torture dance",
+		"boogie",
+		"miku polka",
+		"flowing",
+		"sit",
+		"take the L",
+		"PBJ",
+		"cry",
+		"griddy",
+		"prepare yourself",
+		"sturdy",
+		"insane",
+		"shigure ui",
+		"feel me",
+		"go crazy",
+		"guitar hero",
+		"Skibidi",
+		"after death",
+		"yare yare",
+		"skyfall"
+	}
+
+	local EmoteSelected = Tabs.Emote:AddDropdown("EmoteSelected", {
+		Title = "Select Emote",
+		Values = EmoteList,
+		Multi = false,
+		Default = _G.Emote,
+		Callback = function(selectedEmote)
+			_G.Emote = selectedEmote
+			saveSettings()
+		end
+	})
+
+	Tabs.Emote:AddButton({
+		Title = "Play Emote",
+		Description = "play selected emote",
+		Callback = function()
+			local args = {
+				[1] = "BaseHandler",
+				[2] = "PlayEmote",
+				[3] = {
+					[1] = _G.Emote,
+					[2] = true
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+
+	Tabs.Emote:AddButton({
+		Title = "Stop Emote",
+		Description = "stop playing selected emote",
+		Callback = function()
+			local args = {
+				[1] = "BaseHandler",
+				[2] = "PlayEmote",
+				[3] = {}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	-- Troll UI
+
+	Tabs.Troll:AddParagraph({
+
+		Title = "Troll Feature",
+
+		Content = "Feature that you can use to troll people"
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Chain Move",
+		Description = "Click to Use Toji's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TojiHandler",
+				[2] = "ChainMove",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Beatdown",
+		Description = "Click to Use Toji's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TojiHandler",
+				[2] = "Beatdown",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "X Box Series",
+		Description = "Click to Use Toji's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TojiHandler",
+				[2] = "ImpaleAwakened",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Domain Breaker",
+		Description = "Click to Use Toji's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TojiHandler",
+				[2] = "Barrage",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Mawl",
+		Description = "Click to Use Todo's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TodoHandler",
+				[2] = "Mawl",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Obliterate",
+		Description = "Click to Use Todo's Skills",
+		Callback = function()
+			local args = {
+				[1] = "TodoHandler",
+				[2] = "Obliterate",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+
+	Tabs.Troll:AddButton({
+		Title = "Recuperate",
+		Description = "Click to Use Yuta's Skills",
+		Callback = function()
+			local args = {
+				[1] = "YutaHandler",
+				[2] = "Recuperate",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+	Tabs.Troll:AddButton({
+		Title = "Exterminate",
+		Description = "Click to Use Yuta's Skills",
+		Callback = function()
+			local args = {
+				[1] = "YutaHandler",
+				[2] = "Exterminate",
+				[3] = {
+					["Air"] = false
+				}
+			}
+
+			game:GetService("ReplicatedStorage").remotes.base:FireServer(unpack(args))
+		end
+	})
+
+
+
+
+	-- Addons:
+
+	-- SaveManager (Allows you to have a configuration system)
+
+	-- InterfaceManager (Allows you to have a interface managment system)
+	InterfaceManager:SetLibrary(Fluent)
+	-- use case for doing it this way:
+	-- a script hub could have themes in a global folder
+	-- and game configs in a separate folder per game
+	InterfaceManager:SetFolder("ZA_HUB")
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "ZAHUB",
+		Content = "ZAHUB VIP SCRIPT.",
+		Duration = 8
+	})
+
+	local ScreenGui1 = Instance.new("ScreenGui")
+	local ImageButton1 = Instance.new("ImageButton")
+	local UICorner = Instance.new("UICorner")
+
+	ScreenGui1.Name = "ImageButton"
+	ScreenGui1.Parent = game.CoreGui
+	ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageButton1.Parent = ScreenGui1
+	ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+	ImageButton1.BorderSizePixel = 0
+	ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton1.Draggable = true
+	ImageButton1.Image = "rbxassetid://17104270399"
+	ImageButton1.MouseButton1Down:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+	end)
+	UICorner.Parent = ImageButton1
+
+
+	do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+			_G.Color = Color3.fromRGB(230, 5, 12)
+		end 
+	end
+
+
+end
+
+-- Stand Upright Rebooted
+
+if SUMain then
+
+	local startTime = os.time() -- Record the starting time
+
+	print('Game Loading: Stand Upright Rebooted')
+
+	repeat 
+		task.wait() 
+	until game:IsLoaded()
+
+	local endTime = os.time() -- Record the ending time
+	local elapsedTime = endTime - startTime -- Calculate elapsed time
+
+	print('Game Loaded: ' .. elapsedTime .. ' seconds')
+
+	_G.ThisPlayer = game.Players.LocalPlayer
+	_G.MyName = _G.ThisPlayer.Name
+
+	-- Load UI
+
+	local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+	local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/ZAZA.lua"))()
+	local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/barlossxi/barlossxi/main/InterfaceManager.lua.txt"))()
+
+	local Window = Fluent:CreateWindow({
+		Title = "Stand Upright Rebooted",
+		SubTitle = "by ZA HUB",
+		TabWidth = 160,
+		Size = UDim2.fromOffset(580, 340),
+		Acrylic = true,
+		Theme = "Dark",
+		MinimizeKey = Enum.KeyCode.RightControl 
+	})
+
+	local Tabs = {
+		Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+		Dungeon = Window:AddTab({ Title = "Dungeon", Icon = "swords" }),
+		Stand = Window:AddTab({ Title = "Stand", Icon = "users" }),
+		Teleport = Window:AddTab({ Title = "Teleport", Icon = "map-pin" }),
+		Webhook = Window:AddTab({ Title = "Webhook", Icon = "mail-plus"}),
+		Misc = Window:AddTab({ Title = "Misc", Icon = "boxes" }),
+		Settings = Window:AddTab({ Title = "Theme", Icon = "settings" })
+	}
+
+	local aza = "ZA HUB Script"
+	local bza = tostring(game.PlaceId).."-"..tostring(game.Players.LocalPlayer.Name)
+	function saveSettings()
+		local cza = game:GetService("HttpService")
+		local dza = cza:JSONEncode(_G)
+		if writefile then
+			if isfolder(aza) then
+				writefile(aza .. "\\" .. bza, dza)
+			else
+				makefolder(aza)
+				writefile(aza .. "\\" .. bza, dza)
+			end
+		end
+	end
+	function loadSettings()
+		local cza = game:GetService("HttpService")
+		if isfile(aza .. "\\" .. bza) then
+			_G = cza:JSONDecode(readfile(aza .. "\\" .. bza))
+		end
+	end
+	loadSettings()
+
+	local Options = Fluent.Options
+
+	local QuestList = {
+		"Select Quest",
+		"Giorno Lv.1+",
+		"Scared Noob Lv.10+",
+		"Koiichi Lv.20+",
+		"Rker Dummy Lv.30+",
+		"Okuyasu Lv.40+",
+		"Joseph Lv.50+",
+		"Josuke Lv.75+",
+		"Kishibe Rohan Lv.100+",
+		"DIO Lv.125+",
+		"Muhammed Avdol Lv.150+",
+		"Giorno Mafia Lv.175+",
+		"Zeppeli Lv.200+",
+		"Young Joseph Lv.275+"
+	}
+
+	local SelectQuest = Tabs.Main:AddDropdown("Select Quest", {
+		Title = "Select Quest",
+		Values = QuestList,
+		Multi = false,
+		Default = _G.Quest,
+		Callback = function(v)
+			_G.Quest = v
+			saveSettings()
+		end
+	})
+
+	local function PressKey(key)
+		game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode[key], false, game)
+	end
+
+	local FarmModeList = {
+		"Behind"
+	}
+
+	local FarmModeSelect = Tabs.Main:AddDropdown("FarmModeSelect", {
+		Title = "Select Mode",
+		Values = FarmModeList,
+		Multi = false,
+		Default = _G.FarmMode,
+		Callback = function(selectedFM)
+			_G.FarmMode = selectedFM
+			saveSettings()
+		end
+	})
+
+	local SliderRange = Tabs.Main:AddSlider("SliderRange", {
+		Title = "Farming Range",
+		Description = "range that tou will stay away from target",
+		Default = _G.range or 5,
+		Min = 3,
+		Max = 15,
+		Rounding = 1,
+		Callback = function(Value)
+			_G.range = Value
+			saveSettings()
+		end
+	})
+
+	SliderRange:OnChanged(function(Value)
+		_G.range = Value
+	end)
+
+	local ToggleFarm = Tabs.Main:AddToggle("ToggleFarm", {Title = "Auto Farm", Default = false})
+
+	ToggleFarm:OnChanged(function(autofarm)
+		_G.AutoFarm = autofarm
+		saveSettings()
+	end)
+
+	local function Attack()
+		pcall(function()
+			game:GetService("Players").LocalPlayer.Character.StandEvents.M1:FireServer()
+			wait(0.2)
+		end)
+	end
+
+	spawn(function()
+		while true do 
+			pcall(function()
+				wait(.03)
+				if _G.AutoFarm and game.Players.LocalPlayer.Character and game.workspace.Living[_G.MyName] then
+					local player = game.Players.LocalPlayer
+					if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+						local humanoidRootPart = player.Character.HumanoidRootPart
+						local currentTargetName = {
+							["Giorno Lv.1+"] = "Bad Gi",
+							["Scared Noob Lv.10+"] = "Scary Monster",
+							["Koiichi Lv.20+"] = "Giorno Giovanna",
+							["Rker Dummy Lv.30+"] = "Rker Dummy",
+							["Okuyasu Lv.40+"] = "Yoshikage Kira",
+							["Joseph Lv.50+"] = "Dio Over Heaven",
+							["Josuke Lv.75+"] = "Angelo",
+							["Kishibe Rohan Lv.100+"] = "Alien",
+							["DIO Lv.125+"] = "Jotaro Part 4",
+							["Muhammed Avdol Lv.150+"] = "Kakyoin",
+							["Giorno Mafia Lv.175+"] = "Jungle Bandit",
+							["Zeppeli Lv.200+"] = "Sewer Vampire",
+							["Young Joseph Lv.275+"] = "Pillerman"
+						}
+						local success, err = pcall(function()
+							local currentTargets = {}
+							for _, mob in ipairs(workspace.Living:GetChildren()) do
+								if mob.Name == currentTargetName[_G.Quest] and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+									table.insert(currentTargets, mob)
+								end
+							end
+							if #currentTargets > 0 then
+								for _, currentTarget in ipairs(currentTargets) do
+									local targetCFrame
+									wait()
+									if _G.FarmMode == "Behind" then
+										targetCFrame = currentTarget.HumanoidRootPart.CFrame * CFrame.new(0, 0, _G.range)
+									else
+										Fluent:Notify({
+											Title = "Select Farm Mode",
+											Content = "To use this feature you need to select farm mode first",
+											Duration = 5
+										})
+										wait(5)
+									end
+									if game.workspace.Living[_G.MyName].Aura.Value == true then
+										-- Implement your code for when aura is active
+									else
+										PressKey('Q')
+									end
+									Attack()
+									if targetCFrame then
+										game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame
+									end
+									-- Fire server events based on quest completion
+									-- Add your server event firing code here
+									if _G.Quest == "Giorno Lv.1+" then
+										workspace.Map.NPCs.Giorno.Done:FireServer() 
+										workspace.Map.NPCs.Giorno.QuestDone:FireServer()
+									end
+									if _G.Quest == "Scared Noob Lv.10+" then
+										workspace.Map.NPCs:FindFirstChild("Scared Noob").Done:FireServer()
+										workspace.Map.NPCs:FindFirstChild("Scared Noob").QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Koiichi Lv.20+" then
+										workspace.Map.NPCs.Koichi.Done:FireServer()
+										workspace.Map.NPCs.Koichi.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Rker Dummy Lv.30+" then
+										workspace.Map.NPCs.aLLmemester.Done:FireServer()
+										workspace.Map.NPCs.aLLmemester.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Okuyasu Lv.40+" then
+										workspace.Map.NPCs.Okayasu.Done:FireServer()
+										workspace.Map.NPCs.Okayasu.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Joseph Lv.50+" then
+										workspace.Map.NPCs:FindFirstChild("Joseph Joestar").Done:FireServer()
+										workspace.Map.NPCs:FindFirstChild("Joseph Joestar").QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Josuke Lv.75+" then
+										workspace.Map.NPCs.Josuke.Done:FireServer()
+										workspace.Map.NPCs.Josuks.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Kishibe Rohan Lv.100+" then
+										workspace.Map.NPCs.Rohan.Done:FireServer()
+										workspace.Map.NPCs.Rohan.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "DIO Lv.125+" then
+										workspace.Map.NPCs.DIO.Done:FireServer()
+										workspace.Map.NPCs.DIO.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Muhammed Avdol Lv.150+" then
+										workspace.Map.NPCs:FindFirstChild("Muhammed Avdol").Done:FireServer()
+										workspace.Map.NPCs:FindFirstChild("Muhammed Avdol").QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Giorno Mafia Lv.175+" then
+										workspace.Map.NPCs:GetChildren()[15].Done:FireServer()
+										workspace.Map.NPCs:GetChildren()[15].QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Zeppeli Lv.200+" then
+										workspace.Map.NPCs.Zeppeli.Done:FireServer()
+										workspace.Map.NPCs.Zeppeli.QuestDone:FireServer()
+									end
+
+									if _G.Quest == "Young Joseph Lv.275+" then
+										workspace.Map.NPCs:FindFirstChild("Young Joseph").Done:FireServer()
+										workspace.Map.NPCs:FindFirstChild("Young Joseph").QuestDone:FireServer()
+									end
+
+									-- Add similar blocks for other quests
+
+								end
+							else
+								-- No available targets, teleport up by 1000 CFrame units
+								humanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 1000, 0)
+							end
+						end)
+						if not success then
+							warn("Error occurred:", err)
+						end
+					end 
+				end
+			end)
+		end
+	end)
+
+
+	local ToggleAJOH = Tabs.Main:AddToggle("ToggleAJOH", {Title = "Auto Kill Jotaro OH", Default = _G.AutoJOH })
+	ToggleAJOH:OnChanged(function(tgjoh)
+		_G.AutoJOH = tgjoh
+		saveSettings()
+	end)
+
+	spawn(function()
+		pcall(function()
+			while true do
+				wait()
+				if _G.AutoJOH and game.workspace.Living["Jotaro Over Heaven"] then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Living["Jotaro Over Heaven"].HumanoidRootPart.CFrame * CFrame.new(0, 0, _G.range)
+					wait()
+					Attack()
+				end
+			end
+		end)
+	end)
+
+	spawn(function()
+		while wait() do 
+			pcall(function()
+				if _G.AutoJOH and game.workspace.Living["Jotaro Over Heaven"] then 
+					for i,v in pairs(workspace.Living:GetChildren()) do 
+						if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name == "Jotaro Over Heaven" then 
+							v.Humanoid.Health = 0
+						end 
+					end 
+					sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+				end 
+			end) 
+		end 
+	end)
+
+
+
+	local StandList = {
+		"Aerosmith",
+		"Cream",
+		"Crazy Diamond",
+		"Dio's The World",
+		"Diver Down",
+		"Dirty Deeds Done Dirt Cheap",
+		"Gold Experience",
+		"Hierophant Green",
+		"Jotaro's Star Platinum",
+		"King Crimson",
+		"Killer Queen",
+		"Magician Red",
+		"Purple Haze",
+		"Putrid Whine",
+		"Silver Chariot",
+		"Star Platinum",
+		"Star Platinum OVA",
+		"Star Platinum: Stone Ocean",
+		"Stone Free",
+		"Sticky Finger",
+		"The Emperor",
+		"The Hand",
+		"The World",
+		"The World Alternate Universe",
+		"The World OVA",
+		"Tusk Act 1",
+		"Whitesnake"
+	}
+
+	_G.SelectedStands = {}
+
+	local SelectStand = Tabs.Stand:AddDropdown("Select Stand", {
+		Title = "Select Stand",
+		Description = "Select Stand You need",
+		Values = StandList,
+		Multi = true,
+		Default = _G.SelectedStands,
+		Callback = function(selected)
+			_G.SelectedStands = selected
+		end
+	})
+
+
+
+	SelectStand:OnChanged(function(selected)
+		_G.SelectedStands = {}
+		for stand, isSelected in pairs(selected) do
+			if isSelected then
+				table.insert(_G.SelectedStands, stand)
+			end
+		end
+		for _, stand in ipairs(_G.SelectedStands) do
+			-- เนเธกเนเธ•เนเธญเธเนเธชเนเธญเธฐเนเธฃ
+		end
+	end)
+
+
+	local AttributeList = {
+		"None",
+		"Strong",
+		"Powerful",
+		"Manic",
+		"Tough",
+		"Enrage",
+		"Sloppy",
+		"Lethargic",
+		"Godly",
+		"Daemon",
+		"Glass Cannon",
+		"Hacker",
+		"Invincible",
+		"Tragic",
+		"Diabolical",
+		"Legendary"
+	}
+
+	_G.SelectedAttributes = {}
+
+	local SelectAttribute = Tabs.Stand:AddDropdown("Select Attribute", {
+		Title = "Select Attribute",
+		Description = "Select Attribute you need",
+		Values = AttributeList,
+		Multi = true,
+		Default = _G.SelectedAttributes,
+		Callback = function(selected)
+			_G.SelectedAttributes = selected
+		end
+	})
+
+	SelectAttribute:OnChanged(function(selected)
+		_G.SelectedAttributes = {}
+		for attribute, isSelectedat in pairs(selected) do
+			if isSelectedat then
+				table.insert(_G.SelectedAttributes, attribute)
+			end
+		end
+		for _, attribute in ipairs(_G.SelectedAttributes) do
+			-- เนเธกเนเธ•เนเธญเธเนเธชเนเธญเธฐเนเธฃ
+		end
+	end)
+
+
+	local function gotStand()
+		Fluent:Notify({
+			Title = "Stand Matched",
+			Content = "You've got selected Stand",
+			Duration = 10
+		})
+	end
+
+	local function sendStandNotification()
+		-- Send webhook
+		local HttpService = game:GetService("HttpService")
+		local DName = game.Players.LocalPlayer.DisplayName
+		local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+		_G.CurrentStand = game.Players.LocalPlayer.PlayerGui.PlayerGUI.ingame.Stats.StandName["Name_"].TextLabel.Text
+		_G.CurrentAttribute = game.Players.LocalPlayer.Data.Attri.Value
+		local requestfunc = syn and syn.request or request or http_request or http.request or fluxus and fluxus.request or game.HttpGet
+
+		local req = requestfunc({
+			Url = _G.Webhook,
+			Method = 'POST',
+			Headers = {
+				['Content-Type'] = 'application/json'
+			},
+			Body = HttpService:JSONEncode({
+				["content"] = "<:notify:1228703986354491452> Stand Upright Rebooted",
+				["embeds"] = {{
+					["title"] = "<:user:1228703738642960525> User : ||" .. DName .. "(@" .. game.Players.LocalPlayer.Name .. ")||",
+					["color"] = tonumber(0xFF0000),
+					["description"] = "## You've got Selected Stand" .. "\n### <:spirit:1228703937595441284> Stand : " .. (_G.CurrentStand or "Unknown Stand") .. "\n###  <:buff:1228703881861660682> Attribute : " .. (_G.CurrentAttribute or "Unknown Attribute"),
+					["image"] = {
+						["url"] = "https://media.discordapp.net/attachments/1219347788610015423/1228689155735818320/standard.gif?ex=662cf4f2&is=661a7ff2&hm=1fd77da2d83164f76ce0d988a55d8e797e37db27caea54f6490654fd83bd3988&"
+					}
+				}}
+			})
+		})
+	end
+
+
+
+	local function checkStand()
+		for _, stand in ipairs(_G.SelectedStands) do
+			_G.CurrentStand = game.Players.LocalPlayer.PlayerGui.PlayerGUI.ingame.Stats.StandName["Name_"].TextLabel.Text
+			if _G.CurrentStand == stand then
+				return true -- Stand found
+			end
+		end
+		return false -- Stand not found
+	end
+
+	local function checkAttribute()
+		for _, attribute in ipairs(_G.SelectedAttributes) do
+			_G.CurrentAttribute = game.Players.LocalPlayer.Data.Attri.Value
+			if _G.CurrentAttribute == attribute then
+				return true -- Attribute found
+			end
+		end
+		return false -- Attribute not found
+	end
+
+
+	local ModeList = {
+		"Stand Only",
+		"Attribute Only",
+		"Stand or Attribute",
+		"Stand and Attribute"
+	}
+
+	local SelectMode = Tabs.Stand:AddDropdown("SelectMode", {
+		Title = "Stand Farming Mode",
+		Values = ModeList,
+		Multi = false,
+		Default = _G.SFMode,
+		Callback = function(selectedMode)
+			_G.SFMode = selectedMode
+			saveSettings()
+		end
+	})
+
+	local ArrowList = {
+		"Stand Arrow",
+		"Charged Arrow",
+		"Kars Mask"
+	}
+
+	local SelectArrow = Tabs.Stand:AddDropdown("SelectArrow", {
+		Title = "Select Arrow",
+		Values = ArrowList,
+		Multi = false,
+		Default = _G.SFArrow,
+		Callback = function(selectedArrow)
+			_G.SFArrow = selectedArrow
+			saveSettings()
+		end
+	})
+
+
+	local ToggleSF = Tabs.Stand:AddToggle("ToggleSF", {Title = "Auto Farm Stand", Default = _G.AutoStand })
+	ToggleSF:OnChanged(function(tgsf)
+		_G.AutoStand = tgsf
+	end)
+	-- Stand Farming
+
+	spawn(function()
+		while true do
+			pcall(function()
+				wait()
+				if _G.AutoStand and _G.SFMode == "Attribute Only" then
+					if checkAttribute() then
+						if _G.SendHook then
+							sendStandNotification()
+						end
+						gotStand()
+						_G.AutoStand = false
+					else
+						if _G.CurrentStand == "None" then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(_G.SFArrow))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+							wait(1)
+						else
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+						end
+					end
+				end
+				if _G.AutoStand and _G.SFMode == "Stand Only" then
+					if checkStand() then
+						if _G.SendHook then
+							sendStandNotification()
+						end
+						gotStand()
+						_G.AutoStand = false
+					else
+						if _G.CurrentStand == "None" then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(_G.SFArrow))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+							wait(3)
+						else
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+						end
+					end
+				end
+				if _G.AutoStand and _G.SFMode == "Stand and Attribute" then
+					if checkStand() and checkAttribute() then
+						if _G.SendHook then
+							sendStandNotification()
+						end
+						gotStand()
+						_G.AutoStand = false
+					else
+						if _G.CurrentStand == "None" then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(_G.SFArrow))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+							wait(1)
+						else
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+						end
+					end
+				end
+				if _G.AutoStand and _G.SFMode == "Stand or Attribute" then
+					if checkStand() or checkAttribute() then
+						if _G.SendHook then
+							sendStandNotification()
+						end
+						gotStand()
+						_G.AutoStand = false
+					else
+						if _G.CurrentStand == "None" then
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(_G.SFArrow))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+							wait(1)
+						else
+							game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Rokakaka"))
+							wait(0.5)
+							game:GetService("ReplicatedStorage").Events.UseItem:FireServer()
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+
+
+
+	Tabs.Webhook:AddInput("InputHook", {
+		Title = "Webhook",
+		Default = _G.Webhook,
+		Placeholder = "Enter Discord Webhook",
+		Numeric = false,
+		Finished = false,
+		Callback = function(hook)
+			_G.Webhook = hook
+			saveSettings()
+		end
+	})
+
+	Tabs.Webhook:AddButton({
+		Title = "Test Webhook",
+		Callback = function()
+			pcall(function()
+				local HttpService = game:GetService("HttpService")
+				local DName = game.Players.LocalPlayer.DisplayName
+				local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+				_G.CurrentStand = game.Players.LocalPlayer.PlayerGui.PlayerGUI.ingame.Stats.StandName["Name_"].TextLabel.Text
+				_G.CurrentAttribute = game.Players.LocalPlayer.Data.Attri.Value
+				local requestfunc = syn and syn.request or request or http_request or http.request or fluxus and fluxus.request or game.HttpGet
+
+				local function sendNotification(toolName)
+					local req = requestfunc({
+						Url = _G.Webhook,
+						Method = 'POST',
+						Headers = {
+							['Content-Type'] = 'application/json'
+						},
+						Body = HttpService:JSONEncode({
+							["content"] = "<:notify:1228703986354491452> Webhook Testing",
+							["embeds"] = {{
+								["title"] = "<:user:1228703738642960525> User : ||" .. DName .. "(@" .. game.Players.LocalPlayer.Name .. ")||",
+								["color"] = tonumber(0xFF0000),
+								["description"] = "## Your Webhook is working!",
+								["image"] = {
+									["url"] = "https://media.discordapp.net/attachments/1219347788610015423/1228689155735818320/standard.gif?ex=662cf4f2&is=661a7ff2&hm=1fd77da2d83164f76ce0d988a55d8e797e37db27caea54f6490654fd83bd3988&"
+								}
+							}}
+						})
+					})
+				end
+
+				sendNotification()
+			end)
+		end
+	})
+
+	local ToggleWH = Tabs.Webhook:AddToggle("ToggleWH", {Title = "Auto Send Webhook", Default = _G.SendHook })
+	ToggleWH:OnChanged(function(tgsh)
+		_G.SendHook = tgsh
+		saveSettings()
+	end)
+
+	spawn(function()
+		while true do
+			wait()
+			if _G.SendHook and _G.Webhook == nil then
+				Fluent:Notify({
+					Title = "ENTER FUCKING WEBHOOK",
+					Content = "IF YOU WANT TO USE WEBHOOK, JUST ENTER WEBHOOK",
+					Duration = 5
+				})
+				wait(5)
+			end
+		end
+	end)
+
+	local function teleportTo(targetCFrame)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame
+	end
+
+	-- Teleport
+
+	Tabs.Teleport:AddButton({
+		Title = "D4C Dimensions",
+		Description = "Click to Teleport",
+		Callback = function()
+			teleportTo(CFrame.new(11923.876, -3.42535591, -4496.9624, -0.989235818, -3.95873911e-09, -0.146329969, -4.72690509e-09, 1, 4.90183227e-09, 0.146329969, 5.5407563e-09, -0.989235818))
+		end
+	})
+
+	Tabs.Teleport:AddButton({
+		Title = "CEO of Nigga",
+		Description = "Click to Teleport",
+		Callback = function()
+			teleportTo(CFrame.new(-494.072998, 67.0282059, -533.332397, -0.0346889272, 7.07499339e-08, -0.999398172, 8.19831953e-08, 1, 6.79469139e-08, 0.999398172, -7.957685e-08, -0.0346889272))
+		end
+	})
+
+	Tabs.Teleport:AddButton({
+		Title = "Stand Storage",
+		Description = "Click to Teleport",
+		Callback = function()
+			teleportTo(CFrame.new(3328.16919, 97.4779358, -154.026489, 0.017833434, -8.0473896e-08, -0.999840975, 5.65084015e-08, 1, -7.94787951e-08, 0.999840975, -5.50820332e-08, 0.017833434))
+		end
+	})
+
+	Tabs.Teleport:AddButton({
+		Title = "Jotaro Dimensions",
+		Description = "Click to Teleport",
+		Callback = function()
+			teleportTo(CFrame.new(28065.0156, 29.5231247, -178.608856, 0.431644261, 2.44119089e-08, -0.902043939, 2.00723371e-09, 1, 2.80233809e-08, 0.902043939, -1.39067442e-08, 0.431644261))
+		end
+	})
+
+	-- Dungeon
+
+	local function sendDungeonReward()
+		-- Send webhook
+		local HttpService = game:GetService("HttpService")
+		local DName = game.Players.LocalPlayer.DisplayName
+		local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+		_G.RewardGot = game:GetService("Players").LocalPlayer.PlayerGui.LairClear.Reward.Text
+		local requestfunc = syn and syn.request or request or http_request or http.request or fluxus and fluxus.request or game.HttpGet
+
+		local req = requestfunc({
+			Url = _G.Webhook,
+			Method = 'POST',
+			Headers = {
+				['Content-Type'] = 'application/json'
+			},
+			Body = HttpService:JSONEncode({
+				["content"] = "<:notify:1228703986354491452> Lair Cleared",
+				["embeds"] = {{
+					["title"] = "<:user:1228703738642960525> User : ||" .. DName .. "(@" .. game.Players.LocalPlayer.Name .. ")||",
+					["color"] = tonumber(0xFF0000),
+					["description"] = "You got " .. _G.RewardGot .. " from " .. _G.Dungeon .. " Lair", -- Added space after "from" and added ".." to concatenate _G.Dungeon
+					["image"] = {
+						["url"] = "https://media.discordapp.net/attachments/1219347788610015423/1230357676714758174/standard_1.gif?ex=663306e1&is=662091e1&hm=c44caf1532bfe0e2879a76664689845f2e20ace4ee3029f3036f9d9929cd5bba&"
+					}
+				}}
+			})
+		})
+	end
+
+
+
+	local DungeonList = {
+		"Bad Gi Boss [Lv.15+]",
+		"DIO [Lv.40+]",
+		"Homeless Lord [Lv.80+]",
+		"Diavolo [Lv.100+]",
+		"Jotaro Part 6 [Lv.200+]"
+	}
+
+	local DungeonIndices = {
+		["Bad Gi Boss [Lv.15+]"] = 39,
+		["DIO [Lv.40+]"] = 40,
+		["Diavolo [Lv.100+]"] = "i_stabman",
+		["Jotaro Part 6 [Lv.200+]"] = 41,
+		["Homeless Lord [Lv.80+]"] = 37
+	}
+
+	local SelectDungeon = Tabs.Dungeon:AddDropdown("Select Dungeon", {
+		Title = "Select Dungeon",
+		Values = DungeonList,
+		Multi = false,
+		Default = _G.Dungeon,
+		Callback = function(v)
+			_G.Dungeon = v
+			saveSettings()
+		end
+	})
+
+	local ToggleDungeonFarm = Tabs.Dungeon:AddToggle("ToggleDungeonFarm", {Title = "Auto Dungeon", Default = _G.AutoDungeon})
+
+	ToggleDungeonFarm:OnChanged(function(autodungeon)
+		_G.AutoDungeon = autodungeon
+		saveSettings()
+	end)
+
+	local ToggleSendReward = Tabs.Dungeon:AddToggle("ToggleSendReward", {Title = "Auto Webhook Reward", Default = _G.autoSendReward})
+
+	ToggleSendReward:OnChanged(function(sendhookreward)
+		_G.autoSendReward = sendhookreward
+		saveSettings()
+	end)
+
+	spawn(function()
+		while true do
+			pcall(function()
+				wait()
+				if _G.AutoDungeon and game.workspace:FindFirstChild("Living") and game.workspace.Living:FindFirstChild(_G.MyName) then
+					local boss = game.workspace.Living:FindFirstChild("Boss")
+					if boss then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = boss.HumanoidRootPart.CFrame * CFrame.new(0, 0, _G.range)
+						Attack()
+						if targetCFrame then
+							game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame
+						end
+					end
+
+					local npcIndex = DungeonIndices[_G.Dungeon]
+					if npcIndex then
+						if type(npcIndex) == "string" then
+							workspace.Map.NPCs[npcIndex].Done:FireServer()
+						else
+							workspace.Map.NPCs:GetChildren()[npcIndex].Done:FireServer()
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+
+	spawn(function()
+		while true do
+			if _G.AutoDungeon and _G.autoSendReward then
+				if not _G.SentReward and not workspace.Living[_G.MyName].InLair.Value then
+					local success, error = pcall(sendDungeonReward)
+					if not success then
+						warn("Error sending dungeon reward:", error)
+					else
+						_G.SentReward = true
+					end
+				elseif _G.SentReward and workspace.Living[_G.MyName].InLair.Value then
+					_G.SentReward = false
+				end
+			end
+			wait()
+		end
+	end)
+
+
+
+	spawn(function()
+		while wait() do 
+			pcall(function()
+				if _G.AutoDungeon and game.workspace.Living.Boss then 
+					for i,v in pairs(workspace.Living:GetChildren()) do 
+						if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name == "Boss" then 
+							v.Humanoid.Health = 0
+						end 
+					end 
+					sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+				end 
+			end) 
+		end 
+	end)
+
+	-- Kill Speed Wagons
+	spawn(function()
+		while wait() do 
+			pcall(function()
+				if _G.AutoDungeon and _G.Dungeon == "Jotaro Part 6 [Lv.200+]" then 
+					for i,v in pairs(workspace.Living:GetChildren()) do 
+						if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name == "Speed wagonnnnn" then 
+							v.Humanoid.Health = 0
+						end 
+					end 
+					sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+				end 
+			end) 
+		end 
+	end)
+
+	-- Kill Homeless Man
+
+	spawn(function()
+		while wait() do 
+			pcall(function()
+				if _G.AutoDungeon and _G.Dungeon == "Homeless Lord [Lv.80+]" then 
+					for i,v in pairs(workspace.Living:GetChildren()) do 
+						if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name == "Homeless Man" then 
+							v.Humanoid.Health = 0
+						end 
+					end 
+					sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+				end 
+			end) 
+		end 
+	end)
+
+
+	-- Misc
+
+
+	local Togglevu = Tabs.Misc:AddToggle("Togglevu", {Title = "Anti AFK", Default = true })
+
+	Togglevu:OnChanged(function()
+
+		local vu = game:GetService("VirtualUser")
+		repeat wait() until game:IsLoaded() 
+		game:GetService("Players").LocalPlayer.Idled:connect(function()
+			game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+			vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+			wait(1)
+			vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+		end)
+	end)
+
+	Tabs.Misc:AddToggle("AutW", {
+		Title = "White Screen",
+		Default = _G.WhiteScreen,
+		Callback = function(S)
+			_G.WhiteScreen = S 
+			saveSettings()
+		end
+	})
+
+	spawn(function()
+		while true do
+			wait()
+			if _G.WhiteScreen then
+				game:GetService("RunService"):Set3dRenderingEnabled(false)
+				repeat
+					wait()
+				until not _G.WhiteScreen
+				game:GetService("RunService"):Set3dRenderingEnabled(true)
+			end
+		end
+	end)
+
+	Tabs.Misc:AddButton({
+		Title = "Stand Storage",
+		Description = "Open your stand storage",
+		Callback = function()
+			workspace.Map.NPCs.admpn.Done:FireServer()
+		end
+	})
+
+
+
+	-- Addons:
+
+	-- SaveManager (Allows you to have a configuration system)
+
+	-- InterfaceManager (Allows you to have a interface managment system)
+	InterfaceManager:SetLibrary(Fluent)
+	-- use case for doing it this way:
+	-- a script hub could have themes in a global folder
+	-- and game configs in a separate folder per game
+	InterfaceManager:SetFolder("ZA_HUB")
+	InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+	Window:SelectTab(1)
+
+	Fluent:Notify({
+		Title = "ZAHUB",
+		Content = "ZAHUB VIP SCRIPT.",
+		Duration = 8
+	})
+
+	local ScreenGui1 = Instance.new("ScreenGui")
+	local ImageButton1 = Instance.new("ImageButton")
+	local UICorner = Instance.new("UICorner")
+
+	ScreenGui1.Name = "ImageButton"
+	ScreenGui1.Parent = game.CoreGui
+	ScreenGui1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	ImageButton1.Parent = ScreenGui1
+	ImageButton1.BackgroundTransparency = 1 -- Make the background transparent
+	ImageButton1.BorderSizePixel = 0
+	ImageButton1.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	ImageButton1.Size = UDim2.new(0, 50, 0, 50)
+	ImageButton1.Draggable = true
+	ImageButton1.Image = "rbxassetid://17104270399"
+	ImageButton1.MouseButton1Down:Connect(function()
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,305,false,game)
+		game:GetService("VirtualInputManager"):SendKeyEvent(false,305,false,game)
+	end)
+	UICorner.Parent = ImageButton1
+
+
+	do local GUI = game.CoreGui:FindFirstChild("SOMEXHUB");if GUI then GUI:Destroy();end;if _G.Color == nil then
+			_G.Color = Color3.fromRGB(230, 5, 12)
+		end 
+	end
+
+end
+
+-- Dw
+
+if DwMain then
+	local vu = game:GetService("VirtualUser")
+	repeat wait() until game:IsLoaded() 
+	game:GetService("Players").LocalPlayer.Idled:connect(function()
+		game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+		vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+		wait(1)
+		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	end)
+
+	local lastCFrameCheck
+	local currentCFrame
+
+	local Plr = game.Players.LocalPlayer.Name
+
+	spawn(function()
+		while true do
+			wait(8)
+			lastCFrameCheck = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
+			wait(2)
+			currentCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
+			if currentCFrame == lastCFrameCheck then
+				print('From mituma: debugged, enjoy farming!')
+				workspace.Characters[Plr].Humanoid.Health = 0
+			else
+				--Nothing
+			end
+		end
+	end)
+
+
+	local beforeCash = tonumber(game.Players.LocalPlayer.leaderstats.Cash.Value)
+	local ThisPlr = game.Players.LocalPlayer.Name
+
+	game:GetService("ReplicatedStorage").PlayerData[ThisPlr].InterfaceSFXVolume.Value = 0
+
+	local timersec = 0
+	local timermin = 0
+	local timerhr = 0
+
+	spawn(function()
+		while true do
+			wait(1)
+			timersec = timersec + 1
+		end
+	end)
+
+
+	spawn(function()
+		while true do
+			wait()
+			if timersec >= 60 then
+				timermin = timermin + 1
+				timersec = 0
+			end
+			if timermin >= 60 then
+				timerhr = timerhr + 1
+				timermin = 0
+			end
+		end
+	end)
+
+	spawn(function()
+		while true do
+			wait()
+			if game:GetService("Players").LocalPlayer.PlayerGui.JobComplete.Window.Content.Buttons.ClaimButton.Visible == true then
+				-- Press Claim
+				for i,v in pairs({"MouseButton1Click", "MouseButton1Down", "Activated"}) do
+					for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.JobComplete.Window.Content.Buttons.ClaimButton[v])) do
+						v.Function()
+					end
+				end
+			elseif game:GetService("Players").LocalPlayer.PlayerGui.JobComplete.Window.Content.Buttons.CloseButton.Visible == true then
+				--Press Close
+				for i,v in pairs({"MouseButton1Click", "MouseButton1Down", "Activated"}) do
+					for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.JobComplete.Window.Content.Buttons.CloseButton[v])) do
+						v.Function()
+					end
+				end
+			end
+		end
+	end)
+
+	for i,v in pairs(game.workspace.Cars:GetChildren()) do
+		if tostring(v.Owner.Value) == game.Players.LocalPlayer.Name then
+			MyCar = v.Name
+		end
+	end
+
+
+	function enterCar()
+		local args = {
+			[1] = workspace.Cars[MyCar],
+			[2] = workspace.Cars[MyCar].Seats.Driver
+		}
+
+		game:GetService("ReplicatedStorage").Systems.Cars.EnterCar:InvokeServer(unpack(args))
+	end
+
+	function spawnCar(carName)
+		local args = {
+			[1] = game:GetService("ReplicatedStorage").PlayerData:FindFirstChild(ThisPlr).Inventory.Cars[carName]
+		}
+
+		game:GetService("ReplicatedStorage").Systems.CarInteraction.SpawnPlayerCar:InvokeServer(unpack(args))
+	end
+
+	local function getDelivery()
+		local args = {
+			[1] = workspace.Jobs.FoodDelivery,
+			[2] = workspace.Jobs.FoodDelivery.StartPoints.Beginner
+		}
+
+		game:GetService("ReplicatedStorage").Systems.Jobs.StartJob:InvokeServer(unpack(args))
+	end
+
+	--//stop tween
+	function StopTween(target)
+		if not target then
+			_G.StopTween = true
+			wait()
+			TweenFarm(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+			wait()
+			_G.StopTween = false
+		end
+	end
+
+	function TweenFarm(gotoCFrame)
+		pcall(function()
+			game.Players.LocalPlayer.Character.Humanoid.Sit = false
+			game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+		end)
+		if (game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - gotoCFrame.Position).Magnitude <= 200 then
+			pcall(function() 
+				tweenz:Cancel()
+			end)
+			game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.CFrame = gotoCFrame
+		else
+			local tween_s = game:service"TweenService"
+			local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - gotoCFrame.Position).Magnitude/525, Enum.EasingStyle.Linear)
+			tween, err = pcall(function()
+				tweenz = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = gotoCFrame})
+				tweenz:Play()
+			end)
+			if not tween then return err end
+		end
+		function _TweenCanCle()
+			tweenz:Cancel()
+		end
+	end
+
+	function getOffCar()
+		game:GetService("ReplicatedStorage"):WaitForChild("Systems"):WaitForChild("Cars"):WaitForChild("ExitCar"):InvokeServer()
+
+		game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.E,false,game)
+	end
+
+	local function disableRender()
+		while true do
+			pcall(function()
+				wait()
+				game:GetService("RunService"):Set3dRenderingEnabled(false)
+			end)
+		end
+	end
+
+	spawn(disableRender)
+
+	-- UI --
+	-- Create a ScreenGui
+	local screenGui = Instance.new("ScreenGui")
+	screenGui.Parent = game:GetService("CoreGui")
+	screenGui.IgnoreGuiInset = true -- Enable IgnoreGuiInset to ignore the safe area
+
+	-- Create an ImageLabel to serve as the background
+	local background = Instance.new("ImageLabel")
+	background.Name = "Background"
+	background.Size = UDim2.new(1, 0, 1, 0) -- Full-screen size
+	background.BackgroundColor3 = Color3.new(0, 0, 0) -- Black color
+	background.BackgroundTransparency = 0.5
+	background.Image = "rbxassetid://17250299296" -- Replace "YOUR_IMAGE_ID_HERE" with the actual image ID
+	background.Parent = screenGui
+	background.ZIndex = 100 -- Set a high ZIndex to ensure it's above everything else
+
+
+	-- Create a title text
+	local titleText = Instance.new("TextLabel")
+	titleText.Size = UDim2.new(0.5, 0, 0.1, 0) -- Size relative to screen
+	titleText.Position = UDim2.new(0.25, 0, 0.2, 0) -- Position relative to screen
+	titleText.Text = "Drive World Drifting & Racing [KaiCash]"
+	titleText.TextColor3 = Color3.new(1, 0, 0) -- White text color
+	titleText.TextSize = 28
+	titleText.BackgroundTransparency = 1.0 -- Make the background transparent
+	titleText.ZIndex = 101 -- Set higher ZIndex to be above the black frame
+	titleText.Font = Enum.Font.SciFi -- Set the font to SourceSans
+	titleText.Parent = screenGui
+
+	-- Function to display information on screen
+	local function updateScreen()
+		while true do
+			wait(.03) -- Update every second
+			-- Update current cash value in real-time
+			local currentCash = game.Players.LocalPlayer.leaderstats.Cash.Value
+			-- Calculate the cash earned during the session
+			local cashEarned = currentCash - beforeCash
+			local descriptionText = " Username: " .. game.Players.LocalPlayer.Name ..
+				"\n Current Cash: $" .. currentCash ..
+				"\n Cash Earned: $" .. cashEarned ..
+				"\n Timer: " .. timerhr .. " Hours " .. timermin .. " Minutes " .. timersec .. " Seconds "
+			screenGui.Description.Text = descriptionText -- Update the description text directly from the screenGui
+		end
+	end
+
+	-- Create a description text
+	local descriptionText = Instance.new("TextLabel")
+	descriptionText.Name = "Description"
+	descriptionText.Size = UDim2.new(0.5, 0, 0.5, 0)
+	descriptionText.Position = UDim2.new(0.25, 0, 0.25, 0)
+	descriptionText.BackgroundTransparency = 1
+	descriptionText.TextColor3 = Color3.new(1, 1, 1)
+	descriptionText.TextSize = 21
+	descriptionText.ZIndex = 101
+	descriptionText.Font = Enum.Font.SciFi -- Set the font to SourceSans
+	descriptionText.Parent = screenGui
+
+	-- Start the loop to update screen
+	spawn(updateScreen)
+
+
+	local function disable()
+		while true do
+			wait()
+			pcall(function()
+				game:GetService("Players").LocalPlayer.PlayerGui.CancelActivityConfirmation.Window.Visible = false
+				game:GetService("Players").LocalPlayer.PlayerGui.CancelActivityConfirmation.Enabled = false
+				game:GetService("Lighting").BackgroundBlur.Enabled = false
+			end)
+		end
+	end
+
+	local co = coroutine.create(disable)
+	coroutine.resume(co)
+
+	local function mainLoop()
+		while true do
+			wait()
+			local completionRegion = game.workspace:FindFirstChild("CompletionRegion")
+			if completionRegion then
+				local primaryPart = completionRegion.PrimaryPart
+				if primaryPart then
+					if game:GetService("Players").LocalPlayer.PlayerGui.Score.Frame.Jobs.Visible == true then
+						wait()
+						getOffCar()
+						wait()
+						TweenFarm(CFrame.new(primaryPart.Position))
+					else
+						wait()
+						spawnCar(MyCar)
+						wait()
+						enterCar()
+						wait()
+						getDelivery()
+					end
+				else
+					-- do nothing
+				end
+			else 
+				if game.workspace.Cars:FindFirstChild(MyCar) then
+					-- Check Driver
+					if game.workspace.Cars[MyCar].CurrentDriver.Value ~= game.Players.LocalPlayer.Name then
+						wait()
+						enterCar(
+							wait())
+						getDelivery()
+						wait()
+						getOffCar()
+					else
+						repeat
+							getDelivery()
+						until game:GetService("Players").LocalPlayer.PlayerGui.Score.Frame.Jobs.Visible == true
+					end
+				else
+					spawnCar(MyCar)
+					wait()
+				end
+			end
+		end
+	end
+
+	-- Call the main loop function initially
+	mainLoop()
+
+	local respawned = false  -- Variable to track if player has respawned
+
+	spawn(function()
+		while true do
+			if not respawned and game.Players.LocalPlayer.Character then
+				mainLoop()  -- Call the main loop function only once per respawn
+				respawned = true  -- Set respawned flag to true
+			elseif respawned and not game.Players.LocalPlayer.Character then
+				respawned = false  -- Reset respawned flag when player's character is removed (i.e., died)
+			end
+			wait(0.5)  -- Check every second
+		end
+	end)
+end
